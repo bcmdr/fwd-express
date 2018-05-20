@@ -7,6 +7,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+const links = require('./links');
+
 var app = express();
 
 // view engine setup
@@ -18,6 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// pass variables to our templates + all requests
+app.use((req, res, next) => {
+  res.locals.links = links;
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
