@@ -1,14 +1,20 @@
 var express = require('express');
 var router = express.Router();
-const links = require('../links')
+const linksSource = require('../links')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'bcmdr-now' });
+  res.render('index', { title: 'fwd' });
 });
 
-router.get('/:link', function(req, res, next) {
-  res.redirect(links[req.params.link]);
+router.get('/:user', function (req, res, next) {
+  const user = req.params.user
+  const links = linksSource[user]
+  res.render('user', { user, links })
+})
+
+router.get('/:user/:link', function(req, res, next) {
+  res.redirect(linksSource[req.params.user][req.params.link].url);
 });
 
 module.exports = router;

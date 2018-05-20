@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // pass variables to our templates + all requests
 app.use((req, res, next) => {
-  res.locals.links = links;
+  // res.locals.links = links;
   next();
 });
 

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "deploy": "now --public && now alias && now rm --safe bcmdr-now"
+    "deploy": "now --public && now alias && now rm --safe --yes bcmdr-now"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
