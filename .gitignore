@@ -60,5 +60,5 @@ typings/
 # next.js build output
 .next
 
-# bundled application
-public/dist
+variables.env
+variables.env.now
