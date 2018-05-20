@@ -18,5 +18,5 @@ exports.bcmdr = {
   codepen: {
     title: "CodePen",
     url: "https://codepen.io/bcmdr"
-  }
+  },
 }
