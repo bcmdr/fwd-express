@@ -48,6 +48,10 @@ exports.listPage = async (req, res) => {
   //   })
   // })
 
-  res.render('list', { title, links })
+  res.render('listPage', { title, links })
+}
+
+exports.addLink = (req, res) => {
+  res.render('editLink', { title: 'Add Link' })
 }
 

@@ -1,5 +1,6 @@
 extends layout
 
+include mixins/_pageHeading
+
 block content
-  h1  FWD
-  p Welcome to FWD
+  +pageHeading({title: 'Fwd', description: 'Share Organized Links'})

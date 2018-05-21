@@ -13,3 +13,13 @@ I want to showcase my favourite links to friends.
 
 Trello captures cards. 
 Fwd captures links. 
+
+Link: title + url. 
+
+fwd.now.sh/~>/bcmdr
+
+fwd.now.sh/bcmdr
+
+fwd.now.sh/~/bcmdr
+fwd.now.sh/@/bcmdr
+fwd.now.sh/#/bcmdr

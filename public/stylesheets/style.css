@@ -1,8 +1,88 @@
+/* Page */
+
 body {
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0px;
+}
+
+/* Header */
+
+/* Header: Generic */
+
+header > nav ul {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+header > nav li {
+  display: inline-block;
+  padding: .5rem;
+}
+
+header a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Header: Top Navigation Bar */
+
+.navbar-top {
+  display: flex;
+  padding: 1rem;
+}
+
+.navbar-top--section {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-top--section:first-child {
+  flex-grow: 0;
+  text-align: left;
+}
+
+.navbar-top--section:last-child {
+  flex-grow: 0;
+  text-align: right;
+}
+
+.navbar-top section {
+  text-align: center
+}
+
+/* Content */
+
+/* Page Heading */
+.page-heading {
+  text-align: center;
+  font-weight: lighter;
+}
+
+.page-heading title {
+  font-weight: normal;
+}
+
+/* Page Content */ 
+.content {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+/* Form */
+
+.form-item {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+input[type="text"] {
+  margin-top: .5rem;
+  padding: .5rem;
+  width: 100%;
 }
