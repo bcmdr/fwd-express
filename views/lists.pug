@@ -1,8 +1,12 @@
 extends layout
 
-include mixins/_listForm
 include mixins/_pageHeading
+include mixins/_listCard
 
 block content
   +pageHeading({title})
-  +listForm
+  .lists
+    each list in lists
+      +listCard(list)
+
+  

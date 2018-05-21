@@ -86,3 +86,34 @@ input[type="text"] {
   padding: .5rem;
   width: 100%;
 }
+
+/* Flashes */
+
+.flash {
+  background: white;
+  border: 3px solid black;
+  display: flex;
+  padding: 1rem;
+  margin: 1rem;
+}
+.flash p {
+  margin: 0;
+  flex-grow: 1;
+}
+.flash button {
+  background: none;
+  border: none;
+}
+
+.flash--success {
+  border-color: rgba(145,232,66,1)
+}
+.flash--warning {
+  border-color: rgb(238, 255, 82)
+}
+.flash--error {
+  border-color: rgba(200,0,0,1)
+}
+.flash--info {
+  border-color: rgb(82, 229, 255)
+}

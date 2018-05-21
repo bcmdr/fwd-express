@@ -4,20 +4,32 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    header.navbar-top
-      nav.navbar-top--section
-        ul 
-          li 
-            a(href='/') Home
-          li Popular
-          li New
-      section.navbar-top--section
-        a(href='/') ~
-      nav.navbar-top--section
-        ul
-          li
-            a(href='/create') Create
-          li Find
-          li Share
+    block header
+      header.navbar-top
+        nav.navbar-top--section
+          ul 
+            li 
+              a(href='/') Home
+            li Popular
+            li New
+        section.navbar-top--section
+          a(href='/') ~>
+        nav.navbar-top--section
+          ul
+            li
+              a(href='/create') Create
+            li Find
+            li Share
+
+    block messages
+      if locals.flashes
+          .flash-messages
+            - const categories = Object.keys(locals.flashes)
+            each category in categories
+              each message in flashes[category]
+                .flash(class=`flash--${category}`)
+                  p.flash--text!= message
+                  button.flash--remove(onClick="this.parentElement.remove()") &times;
+
     section.content
       block content

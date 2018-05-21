@@ -10,7 +10,12 @@ exports.createList = (req, res) => {
 }
 
 exports.saveList = async (req, res) => {
-  const list = new List(req.body)
-  await list.save()
-  res.redirect('/')
+  const list = await (new List(req.body)).save()
+  req.flash('success', `Successfully created ${list.title}`)
+  res.redirect(`/list/${list.slug}`)
+}
+
+exports.getLists = async (req, res) => {
+  const lists = await List.find()
+  res.render('lists', {title: 'All Lists', lists})
 }
