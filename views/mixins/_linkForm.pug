@@ -1,0 +1,8 @@
+mixin linkForm(list = {}, link = {})
+  form(action=`/${list.slug}/add` method="POST")
+    input(type="hidden", name="list" value=list._id)
+    label.form-item URL
+      input(type="text" name="url")
+    label.form-item Title
+      input(type="text" name="title")
+    input.form-item(type="submit" value="Save")

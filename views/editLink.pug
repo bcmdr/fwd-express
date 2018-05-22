@@ -1,0 +1,8 @@
+extends layout
+
+include mixins/_linkForm
+include mixins/_pageHeading
+
+block content
+  +pageHeading({ title, description })
+  +linkForm(list)
