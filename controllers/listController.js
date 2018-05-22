@@ -12,10 +12,21 @@ exports.createList = (req, res) => {
 exports.saveList = async (req, res) => {
   const list = await (new List(req.body)).save()
   req.flash('success', `Successfully created ${list.title}`)
-  res.redirect(`/list/${list.slug}`)
+  res.redirect(`/${list.slug}`)
 }
 
 exports.getLists = async (req, res) => {
   const lists = await List.find()
   res.render('lists', {title: 'All Lists', lists})
+}
+
+exports.getListBySlug = async (req, res, next) => {
+  const list = await List.findOne({ slug: req.params.slug })
+  if (!list) {
+    // call not found handler in app.js
+    return next()
+  }
+
+  res.render('list', {list, title: list.title})
+
 }

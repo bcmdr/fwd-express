@@ -7,8 +7,11 @@ const { catchErrors } = require('../handlers/errorHandlers')
 
 router.get('/', listController.homePage)
 router.get('/lists', catchErrors(listController.getLists))
+
 router.get('/create', listController.createList)
 router.post('/create', catchErrors(listController.saveList))
+
+router.get('/:slug', catchErrors(listController.getListBySlug))
 
 // router.get('/~/:shortcutId', linkController.shortcutForward)
 

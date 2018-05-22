@@ -3,3 +3,4 @@ mixin listCard(list = {})
     .list__heading
       h2.title
         a(href=`/${list.slug}`) #{list.title}
+      p= list.description
