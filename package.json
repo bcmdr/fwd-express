@@ -15,8 +15,8 @@
     "watch": "nodemon ./start.js --ignore public/",
     "dev": "concurrently \"npm run watch\" \"npm run assets\" --names \"💻,📦\" --prefix name",
     "assets": "webpack -w --display-max-modules 0",
-    "stage": "now --public",
-    "deploy": "now alias",
+    "deploy": "now --public",
+    "alias": "now alias",
     "clean": "now rm --safe --yes fwd"
   },
   "browserslist": "last 3 versions",
