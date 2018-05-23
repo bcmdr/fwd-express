@@ -114,7 +114,7 @@ header a {
 /* Lists */
 
 .list-page {
-  --line-color: hsla(0, 0%, 90%, 90%);
+  --line-color: lightgrey;
   height: 100%;
   display: flex;
   flex-direction: column;
