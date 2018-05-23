@@ -24,7 +24,7 @@ exports.saveList = async (req, res) => {
 
   const list = await (new List(req.body)).save()
   req.flash('success', `Successfully created ${list.title}`)
-  res.redirect(`/collections/${collection}/${list.slug}`)
+  res.redirect(`/collections/${collection.slug}/${list.slug}`)
 }
 
 exports.saveCollection = async (req, res) => {
@@ -49,7 +49,12 @@ exports.getListBySlug = async (req, res, next) => {
 
 exports.getCollectionBySlug = async (req, res, next) => {
   const collection = await Collection.findOne({ slug: req.params.slug })
-  const lists = await List.find({ collectionId: collection._id })
+  let lists = await List.find({ collectionId: collection._id })
+  lists = await Promise.all(lists.map( async (list) => {
+    // https://stackoverflow.com/questions/40140149/use-async-await-with-array-map
+    list.items = await Item.find({ listId: list._id })
+    return list
+  }))
   if (!collection) return next()
   res.render('collectionPage', { collection, lists, title: collection.title })
 }
@@ -66,4 +71,13 @@ exports.saveLink = async (req, res) => {
   const link = await (new Link(req.body)).save()
   req.flash('success', `Successfully added ${link.title}`)
   res.redirect(`/${req.params.slug}`)
+}
+
+exports.saveItem = async (req, res) => {
+  const item = await (new Item(req.body)).save()
+  console.log(item)
+  const list = await List.findOne({_id: item.listId})
+  const collection = await Collection.findOne({_id: list.collectionId})
+  //req.flash('success', `Successfully added ${item.content}`)
+  res.redirect(`/collections/${collection.slug}/${list.slug}`)
 }

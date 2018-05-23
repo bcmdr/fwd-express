@@ -13,7 +13,7 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 /* Header */
@@ -84,7 +84,7 @@ header a {
   margin-bottom: 1rem;
 }
 
-input[type="text"] {
+.form-item input[type="text"] {
   margin-top: .5rem;
   padding: .5rem;
   width: 100%;
@@ -157,4 +157,11 @@ input[type="text"] {
   padding: .5rem;
   border-bottom: 1px solid lightgrey;
   margin-bottom: .5rem;
+}
+
+.list-page__form-item {
+  padding: .5rem;
+  width: calc(100% - 1rem);
+  border: none;
+  border-bottom: 1px solid lightgrey;
 }
