@@ -140,6 +140,8 @@ input[type="text"] {
 }
 
 .list-page__list {
+  color: black;
+  background: white;
   margin: 0;
   list-style: none;
   border: 1px solid lightgrey;
