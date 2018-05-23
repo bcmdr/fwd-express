@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const h = require('../helpers')
 const Collection = mongoose.model('Collection')
 const List = mongoose.model('List')
 const Item = mongoose.model('Item')
@@ -6,25 +7,49 @@ const Link = mongoose.model('Link')
 
 
 exports.homePage = (req, res) => {
-  res.render('index', { title: 'Share Organized Links' })
+  res.render('index', { title: `${h.siteName} — ${h.siteDescription}` })
 }
 
 exports.addList = async (req, res, next) => {
-  const collection = await Collection.findOne({ slug: req.query.collection })
+  const collectionSlug = req.query.collection
+  const collection = collectionSlug ? await Collection.findOne({ slug: req.query.collection }) : {}
   res.render('editList', { collection, title: `New List` })
+}
+
+exports.saveList = async (req, res) => {
+
+  // TODO: refactor for readability
+
+  let collection
+
+  // Collection has been provided
+  if (req.body.collection) {
+    // Get or create the collection
+    collection = await Collection.findOne({ slug: req.body.collection })
+    if (!collection) {
+      collection = await (new Collection({
+        // TODO: collection id passing needs to be more resilient, this is a quick fix.
+        title: req.body.collection
+      })).save()
+    }
+    // Pass the collection id to the list
+    req.body.collectionId = collection._id
+  }
+  
+  // Save the list
+  const list = await (new List(req.body)).save()
+
+  // Redirect upon success
+  req.flash('success', `Successfully created ${list.title}`)
+  if (collection)
+    res.redirect(`/collections/${collection.slug}/${list.slug}`)
+  else {
+    res.redirect(`/lists/${list.slug}`)
+  }
 }
 
 exports.addCollection = (req, res) => {
   res.render('editCollection', { title: 'New Collection' })
-}
-
-exports.saveList = async (req, res) => {
-  const collection = await Collection.findOne({ slug: req.body.collection })
-  req.body.collectionId = collection._id
-
-  const list = await (new List(req.body)).save()
-  req.flash('success', `Successfully created ${list.title}`)
-  res.redirect(`/collections/${collection.slug}/${list.slug}`)
 }
 
 exports.saveCollection = async (req, res) => {

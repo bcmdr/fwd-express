@@ -8,16 +8,19 @@ html
 
     block header
       header.navbar-top
-        nav.navbar-top--section
+        nav.navbar-top__section
           ul 
+            li
+              b 
+                a(href="/") #{h.siteName}
             li 
-              a(href='/lists') ~ 
-        section.navbar-top--section
-            b= title
-        nav.navbar-top--section
+              a(href='/lists') Lists
+            li 
+              a(href='/collections') Collections
+        nav.navbar-top__section
           ul
             li
-              a(href='/collections/add') +
+              a(href='/lists/add') +
 
     block messages
       if locals.flashes

@@ -19,6 +19,7 @@ router.get('/collections/:slug/:listSlug', catchErrors(listController.getCollect
 
 router.get('/lists/add', catchErrors(listController.addList))
 router.post('/lists/add', catchErrors(listController.saveList))
+router.get('/lists/:slug', catchErrors(listController.getListBySlug))
 router.post('/lists/:slug/add', catchErrors(listController.saveItem))
 
 // router.get('/~/:shortcutId', linkController.shortcutForward)

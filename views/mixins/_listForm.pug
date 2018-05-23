@@ -3,7 +3,7 @@ mixin listForm(collection = {}, list = {})
     label.form-item Title
       input(type="text" name="title")
     label.form-item Collection
-      - const collectionVal = collection ? collection.slug : ''
+      - const collectionVal = collection.slug ? collection.slug : ''
       input(type="text" name="collection" value=`${collectionVal}`)
     label.form-item Description
       input(type="text" name="description")

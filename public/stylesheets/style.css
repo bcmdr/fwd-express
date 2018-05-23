@@ -43,25 +43,15 @@ header a {
   padding: 1rem;
 }
 
-.navbar-top--section {
-  flex-grow: 1;
+.navbar-top__section {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
+  flex-grow: 1;
 }
 
-.navbar-top--section:first-child {
+.navbar-top__section:last-child {
   flex-grow: 0;
-  text-align: left;
-}
-
-.navbar-top--section:last-child {
-  flex-grow: 0;
-  text-align: right;
-}
-
-.navbar-top section {
-  text-align: center
 }
 
 /* Content */
