@@ -27,7 +27,7 @@ exports.getListBySlug = async (req, res, next) => {
   if (!list) {
     return next()
   }
-  res.render('list', {list, links, title: list.title})
+  res.render('list-page', {list, links, title: list.title})
 }
 
 exports.addLink = async (req, res, next) => {

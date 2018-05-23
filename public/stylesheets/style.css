@@ -1,8 +1,19 @@
 /* Page */
 
+:root {
+  font: 16px Helvetica, Arial, sans-serif;
+}
+
+html, body {
+  height: 100%;
+}
+
 body {
-  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
   margin: 0px;
+}
+
+.hidden {
+  display: none;
 }
 
 /* Header */
@@ -55,23 +66,15 @@ header a {
 
 /* Content */
 
+.content {
+  height: 100%;
+  padding: 0 2rem;
+}
+
 /* Page Heading */
 .page-heading {
+  font-size: 2.5rem;
   text-align: center;
-  font-weight: lighter;
-}
-
-.page-heading title {
-  font-weight: normal;
-}
-
-/* Page Content */ 
-.content {
-  padding: 50px;
-}
-
-a {
-  color: #00B7FF;
 }
 
 /* Form */
@@ -116,4 +119,39 @@ input[type="text"] {
 }
 .flash--info {
   border-color: rgb(82, 229, 255)
+}
+
+/* Lists */
+
+.list-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list-page__title {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.list-page__list a {
+  text-decoration: none;
+}
+
+.list-page__list {
+  margin: 0;
+  list-style: none;
+  border: 1px solid lightgrey;
+  border-bottom: none;
+  padding: 1rem;
+  width: 100%;
+  max-width: 620px;
+  flex-grow: 1;
+  border-radius: .5rem .5rem 0 0;
+}
+
+.list-page__list-item {
+  padding: .5rem;
+  border-bottom: 1px solid lightgrey;
 }
