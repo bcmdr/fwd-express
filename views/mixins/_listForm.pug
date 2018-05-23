@@ -1,7 +1,10 @@
-mixin listForm(list = {})
-  form(action="/create" method="POST")
-    label.form-item List Title
+mixin listForm(collection = {}, list = {})
+  form(action="/lists/add" method="POST")
+    label.form-item Title
       input(type="text" name="title")
-    label.form-item List Description
+    label.form-item Collection
+      - const collectionVal = collection ? collection.slug : ''
+      input(type="text" name="collection" value=`${collectionVal}`)
+    label.form-item Description
       input(type="text" name="description")
     input.form-item(type="submit" value="Save")

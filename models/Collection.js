@@ -2,21 +2,20 @@ const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 const slug = require('slugs')
 
-const listSchema = new mongoose.Schema({
+const collectionSchema = new mongoose.Schema({
   title: {
     type: String, 
     trim: true, 
-    required: 'Please enter a list title.'
+    required: 'Please enter a collection title.'
   },
   slug: String,
   description: {
     type: String,
     trim: true
-  },
-  collectionId: String,
+  }
 })
 
-listSchema.pre('save', function(next) {
+collectionSchema.pre('save', function(next) {
   if (!this.isModified('title')) {
     // title not modified
     return next()
@@ -26,4 +25,4 @@ listSchema.pre('save', function(next) {
   // TODO: make slugs unique
 })
 
-module.exports = mongoose.model('List', listSchema)
+module.exports = mongoose.model('Collection', collectionSchema)

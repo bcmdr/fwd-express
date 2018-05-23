@@ -8,12 +8,16 @@ const { catchErrors } = require('../handlers/errorHandlers')
 router.get('/', listController.homePage)
 router.get('/lists', catchErrors(listController.getLists))
 
-router.get('/create', listController.createList)
-router.post('/create', catchErrors(listController.saveList))
+// router.get('/create', listController.createList)
+// router.post('/create', catchErrors(listController.saveList))
 
-router.get('/:slug', catchErrors(listController.getListBySlug))
-router.get('/:slug/add', catchErrors(listController.addLink))
-router.post('/:slug/add', catchErrors(listController.saveLink))
+router.get('/collections/add', listController.addCollection)
+router.post('/collections/add', catchErrors(listController.saveCollection))
+
+router.get('/collections/:slug', catchErrors(listController.getCollectionBySlug))
+
+router.get('/lists/add', catchErrors(listController.addList))
+router.post('/lists/add', catchErrors(listController.saveList))
 
 // router.get('/~/:shortcutId', linkController.shortcutForward)
 

@@ -11,14 +11,13 @@ html
         nav.navbar-top--section
           ul 
             li 
-              a(href='/lists') Browse   
+              a(href='/lists') ~ 
         section.navbar-top--section
-          a(href='/') 
-            b Fwd
+            b= title
         nav.navbar-top--section
           ul
             li
-              a(href='/create') New List
+              a(href='/collections/add') +
 
     block messages
       if locals.flashes

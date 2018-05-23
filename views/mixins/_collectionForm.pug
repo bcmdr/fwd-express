@@ -1,0 +1,7 @@
+mixin collectionForm(collection = {})
+  form(action="/collections/add" method="POST")
+    label.form-item Title
+      input(type="text" name="title")
+    label.form-item Description
+      input(type="text" name="description")
+    input.form-item(type="submit" value="Save")

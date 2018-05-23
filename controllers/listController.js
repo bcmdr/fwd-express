@@ -1,19 +1,36 @@
 const mongoose = require('mongoose')
+const Collection = mongoose.model('Collection')
 const List = mongoose.model('List')
+const Item = mongoose.model('Item')
 const Link = mongoose.model('Link')
+
 
 exports.homePage = (req, res) => {
   res.render('index', { title: 'Share Organized Links' })
 }
 
-exports.createList = (req, res) => {
-  res.render('editList', { title: 'Create a List of Links' })
+exports.addList = async (req, res, next) => {
+  const collection = await Collection.findOne({ slug: req.query.collection })
+  res.render('editList', { collection, title: `New List` })
+}
+
+exports.addCollection = (req, res) => {
+  res.render('editCollection', { title: 'New Collection' })
 }
 
 exports.saveList = async (req, res) => {
+  const collection = await Collection.findOne({ slug: req.body.collection })
+  req.body.collectionId = collection._id
+
   const list = await (new List(req.body)).save()
   req.flash('success', `Successfully created ${list.title}`)
-  res.redirect(`/${list.slug}`)
+  res.redirect(`/collections/${collection}/${list.slug}`)
+}
+
+exports.saveCollection = async (req, res) => {
+  const collection = await (new Collection(req.body)).save()
+  req.flash('success', `Successfully created ${collection.title}`)
+  res.redirect(`/collections/${collection.slug}`)
 }
 
 exports.getLists = async (req, res) => {
@@ -27,7 +44,14 @@ exports.getListBySlug = async (req, res, next) => {
   if (!list) {
     return next()
   }
-  res.render('list-page', {list, links, title: list.title})
+  res.render('listPage', {list, links, title: list.title})
+}
+
+exports.getCollectionBySlug = async (req, res, next) => {
+  const collection = await Collection.findOne({ slug: req.params.slug })
+  const lists = await List.find({ collectionId: collection._id })
+  if (!collection) return next()
+  res.render('collectionPage', { collection, lists, title: collection.title })
 }
 
 exports.addLink = async (req, res, next) => {
