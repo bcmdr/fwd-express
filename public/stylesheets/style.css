@@ -1,7 +1,7 @@
 /* Page */
 
 :root {
-  font: 16px Helvetica, Arial, sans-serif;
+  font: 16px 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 
 html, body {
@@ -114,6 +114,7 @@ header a {
 /* Lists */
 
 .list-page {
+  --line-color: hsla(0, 0%, 90%, 90%);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -145,7 +146,7 @@ header a {
 
 .list-page__list-item {
   padding: .5rem;
-  border-bottom: 1px solid lightgrey;
+  border-bottom: 1px solid var(--line-color);
   margin-bottom: .5rem;
 }
 
@@ -153,5 +154,5 @@ header a {
   padding: .5rem;
   width: calc(100% - 1rem);
   border: none;
-  border-bottom: 1px solid lightgrey;
+  border-bottom: 1px solid var(--line-color);
 }

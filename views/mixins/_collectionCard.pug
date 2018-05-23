@@ -1,0 +1,6 @@
+mixin collectionCard(collection = {})
+  .list
+    .list__heading
+      h2.title
+        a(href=`/collections/${collection.slug}`) #{collection.title}
+      p= collection.description

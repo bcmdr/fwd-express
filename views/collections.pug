@@ -1,0 +1,12 @@
+extends layout
+
+include mixins/_pageHeading
+include mixins/_collectionCard
+
+block content
+  +pageHeading({title})
+  .lists
+    each collection in collections
+      +collectionCard(collection)
+
+  

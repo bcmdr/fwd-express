@@ -6,17 +6,14 @@ const listController = require('../controllers/listController')
 const { catchErrors } = require('../handlers/errorHandlers')
 
 router.get('/', listController.homePage)
-router.get('/lists', catchErrors(listController.getLists))
 
-// router.get('/create', listController.createList)
-// router.post('/create', catchErrors(listController.saveList))
-
+router.get('/collections', catchErrors(listController.getCollections))
 router.get('/collections/add', listController.addCollection)
 router.post('/collections/add', catchErrors(listController.saveCollection))
-
 router.get('/collections/:slug', catchErrors(listController.getCollectionBySlug))
 router.get('/collections/:slug/:listSlug', catchErrors(listController.getCollectionBySlug))
 
+router.get('/lists', catchErrors(listController.getLists))
 router.get('/lists/add', catchErrors(listController.addList))
 router.post('/lists/add', catchErrors(listController.saveList))
 router.get('/lists/:slug', catchErrors(listController.getListBySlug))
