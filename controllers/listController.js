@@ -3,7 +3,7 @@ const List = mongoose.model('List')
 const Link = mongoose.model('Link')
 
 exports.homePage = (req, res) => {
-  res.render('index', { title: 'Fwd' })
+  res.render('index', { title: 'Share Organized Links' })
 }
 
 exports.createList = (req, res) => {

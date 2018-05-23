@@ -154,4 +154,5 @@ input[type="text"] {
 .list-page__list-item {
   padding: .5rem;
   border-bottom: 1px solid lightgrey;
+  margin-bottom: .5rem;
 }
