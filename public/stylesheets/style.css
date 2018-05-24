@@ -75,7 +75,7 @@ header a {
 .hero__button {
   font-size: 1rem;
   background: black;
-  padding: .5rem;
+  padding: .75rem;
   color: white;
   border-radius: .1rem;
   text-decoration: none;
@@ -101,6 +101,7 @@ header a {
 
 .list-form .form-item {
   width: 100%;
+  box-sizing: border-box;
   padding: .5rem;
   font-size: 1rem;
 }
