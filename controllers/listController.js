@@ -25,7 +25,7 @@ exports.saveList = async (req, res) => {
   // Collection has been provided
   if (req.body.collection) {
     // Get or create the collection
-    collection = await Collection.findOne({ slug: req.body.collection })
+    collection = await Collection.findOne({ title: req.body.collection })
     if (!collection) {
       collection = await (new Collection({
         // TODO: collection id passing needs to be more resilient, this is a quick fix.
@@ -103,9 +103,7 @@ exports.getCollectionBySlug = async (req, res, next) => {
 
 exports.saveItem = async (req, res) => {
   const item = await (new Item(req.body)).save()
-  console.log(item)
-  const list = await List.findOne({_id: item.listId})
-  const collection = await Collection.findOne({_id: list.collectionId})
   //req.flash('success', `Successfully added ${item.content}`)
-  res.redirect(`/collections/${collection.slug}/${list.slug}`)
+  const redirectUrl = req.originalUrl.split('/').slice(0, -1).join('/')
+  res.redirect(redirectUrl)
 }
