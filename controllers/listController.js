@@ -7,7 +7,7 @@ const Link = mongoose.model('Link')
 
 
 exports.homePage = (req, res) => {
-  res.render('index', { title: `${h.siteName} — ${h.siteDescription}` })
+  res.render('index', { title: `${h.siteDescription}` })
 }
 
 exports.addList = async (req, res, next) => {
@@ -40,7 +40,7 @@ exports.saveList = async (req, res) => {
   const list = await (new List(req.body)).save()
 
   // Redirect upon success
-  req.flash('success', `Successfully created ${list.title}`)
+  // req.flash('success', `Successfully created ${list.title}`)
   if (collection)
     res.redirect(`/collections/${collection.slug}/${list.slug}`)
   else {

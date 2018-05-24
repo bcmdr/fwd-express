@@ -1,7 +1,7 @@
 mixin collectionList(list={})
     article.list-page 
       header
-        h1.list-page__title= list.title
+        h1.list-page__title(onclick="editListTitle(event)")= list.title
       ul.list-page__list
         if list.items
           each item in list.items

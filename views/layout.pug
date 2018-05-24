@@ -4,6 +4,7 @@ html
     title #{title} ~ Fwd
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/javascripts/fwd-app.js')
   body
 
     block header
@@ -13,10 +14,10 @@ html
             li
               b 
                 a(href="/") #{h.siteName}
-            li 
-              a(href='/lists') Lists
-            li 
-              a(href='/collections') Collections
+            //- li 
+            //-   a(href='/lists') Lists
+            //- li 
+            //-   a(href='/collections') Collections
         nav.navbar-top__section
           ul
             li
