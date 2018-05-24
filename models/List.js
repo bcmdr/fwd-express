@@ -16,14 +16,22 @@ const listSchema = new mongoose.Schema({
   collectionId: String,
 })
 
-listSchema.pre('save', function(next) {
+listSchema.pre('save', async function(next) {
   if (!this.isModified('title')) {
     // title not modified
     return next()
   }
   this.slug = slug(this.title)
+
+  // find other lists that have the same slug
+  const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i')
+  const listsWithSlug = await this.constructor.find({ slug: slugRegEx });
+
+  if (listsWithSlug.length) {
+    this.slug =`${this.slug}-${listsWithSlug.length + 1}`
+  }
+
   next();
-  // TODO: make slugs unique
 })
 
 module.exports = mongoose.model('List', listSchema)
