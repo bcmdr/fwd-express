@@ -19,6 +19,10 @@ router.post('/lists/add', catchErrors(listController.saveList))
 router.get('/lists/:slug', catchErrors(listController.getListBySlug))
 router.post('/lists/:slug/add', catchErrors(listController.saveItem))
 
+router.get('/links/add', linkController.addLink)
+router.post('/links/add', catchErrors(linkController.saveLink))
+router.get('/links/:id', catchErrors(linkController.getLinkById))
+
 // router.get('/~/:shortcutId', linkController.shortcutForward)
 
 // // router.get('/:listId', linkController.listPage)

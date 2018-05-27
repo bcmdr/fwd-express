@@ -70,7 +70,7 @@ exports.getCollections = async (req, res) => {
 
 exports.getListBySlug = async (req, res, next) => {
   const list = await List.findOne({ slug: req.params.slug })
-  if (!list) return next()
+  if (!list) { return next() }
   list.items = await Item.find({listId: list._id})
   res.render('listPage', {list, title: list.title})
 }
@@ -88,18 +88,18 @@ exports.getCollectionBySlug = async (req, res, next) => {
 }
 
 // exports.addLink = async (req, res, next) => {
-//   const list = await List.findOne({ slug: req.params.slug })
-//   if (!list) {
+//   const link = await List.findOne({ slug: req.params.slug })
+//   if (!link) {
 //     return next()
 //   }
-//   res.render('editLink', { list, title: `${list.title}`, description: 'Add Link' })
+//   res.render('editLink', { link, title: `${link.title}`, description: 'Add Link' })
 // }
 
-// exports.saveLink = async (req, res) => {
-//   const link = await (new Link(req.body)).save()
-//   req.flash('success', `Successfully added ${link.title}`)
-//   res.redirect(`/${req.params.slug}`)
-// }
+exports.saveLink = async (req, res) => {
+  const link = await (new Link(req.body)).save()
+  req.flash('success', `Successfully added ${link.title}`)
+  res.redirect(`/${req.params.slug}`)
+}
 
 exports.saveItem = async (req, res) => {
   const item = await (new Item(req.body)).save()

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 const slug = require('slugs')
+const { slugify } = require('./_helpers')
 
 const listSchema = new mongoose.Schema({
   title: {
@@ -14,24 +15,9 @@ const listSchema = new mongoose.Schema({
     trim: true
   },
   collectionId: String,
+  links: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Link' }]
 })
 
-listSchema.pre('save', async function(next) {
-  if (!this.isModified('title')) {
-    // title not modified
-    return next()
-  }
-  this.slug = slug(this.title)
-
-  // find other lists that have the same slug
-  const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i')
-  const listsWithSlug = await this.constructor.find({ slug: slugRegEx });
-
-  if (listsWithSlug.length) {
-    this.slug =`${this.slug}-${listsWithSlug.length + 1}`
-  }
-
-  next();
-})
+listSchema.pre('save', (next) => slugify(next))
 
 module.exports = mongoose.model('List', listSchema)
