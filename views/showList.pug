@@ -9,12 +9,14 @@ block content
         li.list__action
           a(href=`/lists/${list.slug}/add`) Add Link
     each post in list.posts
+      - console.log(post)
       article
         header
           h3= post.link.meta.title
           - const formattedUrl = h.formatUrl(post.link.meta.url)
-          - console.log(post)
           cite= formattedUrl
+        section
+          p= post.link.meta.description
         //- nav
         //-   ul
         //-     li
