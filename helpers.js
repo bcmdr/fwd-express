@@ -16,7 +16,7 @@ exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 
 // Some details about the site
 exports.siteName = 'Fwd'
-exports.siteDescription = 'Lists Made for Sharing'
+exports.siteDescription = 'List and Share Links'
 
 exports.menu = [
   { slug: '/stores', title: 'Stores', icon: 'store', },

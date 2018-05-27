@@ -17,35 +17,9 @@ exports.addList = async (req, res, next) => {
 }
 
 exports.saveList = async (req, res) => {
-
-  // TODO: refactor for readability
-
-  let collection
-
-  // Collection has been provided
-  if (req.body.collection) {
-    // Get or create the collection
-    collection = await Collection.findOne({ title: req.body.collection })
-    if (!collection) {
-      collection = await (new Collection({
-        // TODO: collection id passing needs to be more resilient, this is a quick fix.
-        title: req.body.collection
-      })).save()
-    }
-    // Pass the collection id to the list
-    req.body.collectionId = collection._id
-  }
-  
-  // Save the list
   const list = await (new List(req.body)).save()
-
-  // Redirect upon success
   // req.flash('success', `Successfully created ${list.title}`)
-  if (collection)
-    res.redirect(`/collections/${collection.slug}/${list.slug}`)
-  else {
-    res.redirect(`/lists/${list.slug}`)
-  }
+  res.redirect(`/lists/${list.slug}`)
 }
 
 exports.addCollection = (req, res) => {
@@ -72,7 +46,7 @@ exports.getListBySlug = async (req, res, next) => {
   const list = await List.findOne({ slug: req.params.slug })
   if (!list) { return next() }
   list.items = await Item.find({listId: list._id})
-  res.render('listPage', {list, title: list.title})
+  res.render('showList', {list, title: list.title})
 }
 
 exports.getCollectionBySlug = async (req, res, next) => {
@@ -95,10 +69,35 @@ exports.getCollectionBySlug = async (req, res, next) => {
 //   res.render('editLink', { link, title: `${link.title}`, description: 'Add Link' })
 // }
 
+exports.addLinkToList = async (req, res, next) => {
+  const list = await List.findOne({ slug: req.params.slug })
+  if (!list) return next()
+  res.render('addLink', {list, title: `Add Link to ${list.title}`})
+}
+
 exports.saveLink = async (req, res) => {
   const link = await (new Link(req.body)).save()
   req.flash('success', `Successfully added ${link.title}`)
   res.redirect(`/${req.params.slug}`)
+}
+
+exports.saveLinkToList = async (req, res, next) => {
+  // Find the List
+  const list = await List.findOne({ slug: req.params.slug })
+  if (!list) { return next() }
+  // Prepare Link for Saving
+  const linkId = new mongoose.Types.ObjectId()
+  req.body._id = linkId
+  // Save first list containing this link
+  req.body.lists = [list._id]
+  // Update links contained in this list
+  list.links.push(linkId)
+  list.save()
+  // Save the Link
+  const link = await (new Link(req.body)).save()
+  // Redirect On Success
+  req.flash('success', `Successfully added ${link.url}`)
+  res.redirect(`/lists/${req.params.slug}`)
 }
 
 exports.saveItem = async (req, res) => {

@@ -1,9 +1,11 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 mongoose.Promise = global.Promise
 const shortid = require('shortid');
 
-const linkSchema = new mongoose.Schema({
-  _id: {
+const linkSchema = new Schema({
+  _id: Schema.Types.ObjectId,
+  shortId: {
     type: String,
     'default': shortid.generate
   },
@@ -20,7 +22,7 @@ const linkSchema = new mongoose.Schema({
     trim: true,
     required: 'Please enter a URL.'
   }, 
-  lists: [{ type: mongoose.Schema.Types.ObjectId, ref: 'List' }]
+  lists: [{ type: Schema.Types.ObjectId, ref: 'List' }]
 })
 
 module.exports = mongoose.model('Link', linkSchema);

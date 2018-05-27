@@ -1,5 +1,5 @@
-mixin linkForm(link = {})
-  form(action=`/links/add` method="POST")
+mixin linkFormAdd(list)
+  form(action=`/lists/${list.slug}/add` method="POST")
     label.form-item Link
       input(type="text" name="url")
     input.form-item(type="submit" value="Save")

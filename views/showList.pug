@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  section.list
+    header.list__header
+      h2.list__title= list.title
+      p.list__details
+      ul.list__actions
+        li.list__action
+          a(href=`/lists/${list.slug}/add`) Add Link
+  
+
+  pre= h.dump(list)
