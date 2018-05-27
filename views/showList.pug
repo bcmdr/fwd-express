@@ -1,13 +1,24 @@
 extends layout
 
 block content
-  section.list
-    header.list__header
-      h2.list__title= list.title
-      p.list__details
-      ul.list__actions
+  main
+    header
+      h2= list.title
+    nav
+      ul
         li.list__action
           a(href=`/lists/${list.slug}/add`) Add Link
-  
-
-  pre= h.dump(list)
+    each post in list.posts
+      article
+        header
+          h3= post.link.meta.title
+          - const formattedUrl = h.formatUrl(post.link.meta.url)
+          - console.log(post)
+          cite= formattedUrl
+        //- nav
+        //-   ul
+        //-     li
+        //-       span
+        //-         a(href="#") Upvote
+        //-       span= post.votes
+        //- img

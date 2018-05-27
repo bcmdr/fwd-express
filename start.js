@@ -15,6 +15,7 @@ require('./models/Link')
 require('./models/Collection')
 require('./models/List')
 require('./models/Item')
+require('./models/Post')
 
 // Start our app!
 const app = require('./app');

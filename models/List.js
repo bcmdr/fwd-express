@@ -5,7 +5,14 @@ const slug = require('slugs')
 const shortid = require('shortid');
 
 const listSchema = new Schema({
-  _id: Schema.Types.ObjectId,
+  // _id: {
+  //   type: Schema.Types.ObjectId,
+  //   default: new mongoose.Types.ObjectId()
+  // },
+  shortId: {
+    type: String,
+    'default': shortid.generate
+  },
   title: {
     type: String, 
     trim: true, 
@@ -17,7 +24,7 @@ const listSchema = new Schema({
     trim: true
   },
   collectionId: String,
-  links: [{ type: Schema.Types.ObjectId, ref: 'Link' }]
+  posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
 })
 
 listSchema.pre('save', async function(next) {

@@ -4,7 +4,10 @@ const Collection = mongoose.model('Collection')
 const List = mongoose.model('List')
 const Item = mongoose.model('Item')
 const Link = mongoose.model('Link')
+const Post = mongoose.model('Post')
 
+const metascraper = require('metascraper')
+const got = require('got')
 
 exports.homePage = (req, res) => {
   res.render('index', { title: `${helpers.siteDescription}` })
@@ -28,7 +31,9 @@ exports.getLists = async (req, res) => {
 }
 
 exports.getListBySlug = async (req, res, next) => {
-  const list = await List.findOne({ slug: req.params.slug }).populate('links')
+  // Find the list and fetch nested posts and their nested links
+  const list = await List.findOne({ slug: req.params.slug })
+    .populate({ path: 'posts', populate: { path: 'link', model: 'Link'} })
   if (!list) { return next() }
   res.render('showList', {list, title: list.title})
 }
@@ -40,21 +45,36 @@ exports.addLinkToList = async (req, res, next) => {
 }
 
 exports.saveLinkToList = async (req, res, next) => {
-  // Find the List
+  // Find the Containing List
   const list = await List.findOne({ slug: req.params.slug })
   if (!list) { return next() }
+
   // Prepare Link for Saving
-  const linkId = new mongoose.Types.ObjectId()
-  req.body._id = linkId
-  // Save first list containing this link
+  // const linkId = new mongoose.Types.ObjectId()
+  // req.body._id = linkId
+  // Set containing list
   req.body.lists = [list._id]
-  // Update links contained in this list
-  list.links.push(linkId)
-  list.save()
+
+  const targetUrl = req.body.url
+  const {body: html, url} = await got(targetUrl)
+  const metadata = await metascraper({html, url})
+  req.body.meta = metadata
+
   // Save the Link
-  const link = await (new Link(req.body)).save()
+  const savedLink = await (new Link(req.body)).save()
+
+  // Create the Post
+  const post = {
+    link: savedLink._id,
+    list: list._id
+  }
+  const savedPost = await (new Post(post)).save()
+
+  // Update containing list
+  list.posts.push(savedPost._id)
+  await list.save()
+
   // Redirect On Success
-  req.flash('success', `Successfully added ${link.url}`)
   res.redirect(`/lists/${req.params.slug}`)
 }
 

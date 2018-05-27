@@ -25,3 +25,8 @@ exports.menu = [
   { slug: '/add', title: 'Add', icon: 'add', },
   { slug: '/map', title: 'Map', icon: 'map', },
 ];
+
+exports.formatUrl = (url) => {
+  // strip protocol ('://') then strip 'www.' then strip paths ('/')
+  return url.split('://').slice(1).join('').split('www.').join('').split('/')[0]
+}
