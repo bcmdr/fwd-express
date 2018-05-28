@@ -1,7 +1,8 @@
 extends layout
 
-include mixins/_pageHeading
-
 block content
-  +pageHeading({title})
-  a.hero__button(href="/lists/add") Create a List
+  section.hero.hero--inverted
+    header.padded.top-padded-2x
+      h2.hero__title List and Share Links
+    section.cta.padded.bottom-padded-2x
+      a.cta__link(href="/lists/add") Create a List

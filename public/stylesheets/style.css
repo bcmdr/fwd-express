@@ -1,4 +1,4 @@
-/* Page */
+/* Page Defaults */
 
 :root {
   font: 16px Helvetica, Arial, sans-serif;
@@ -6,81 +6,99 @@
 
 html, body {
   height: 100%;
+  margin: 0;
 }
 
-body {
-  margin: 0px;
+* {
+  box-sizing: border-box;
 }
+
+a {
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+/* Utilities */
 
 .hidden {
   display: none !important;
 }
 
-/* Header */
-
-/* Header: Generic */
-
-header > nav ul {
-  list-style: none;
-  padding: 0px;
-  margin: 0px;
+.padded {
+  padding: 1rem;
 }
 
-header > nav li {
+.padded-1-5x {
+  padding: 1.5rem;
+}
+
+.padded-2x {
+  padding: 2rem;
+}
+
+.top-padded-2x {
+  padding-top: 2rem;
+}
+
+.bottom-padded-2x {
+  padding-bottom: 2rem;
+}
+
+/* Nav */
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
   display: inline-block;
   padding: .5rem;
 }
 
-header a {
+nav a {
   color: inherit;
   text-decoration: none;
 }
 
-/* Header: Top Navigation Bar */
+/* Main Nav */
 
-.navbar-top {
+.flex-nav {
   display: flex;
-  padding: 1rem;
-}
-
-.navbar-top__section {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  flex-grow: 1;
-}
-
-.navbar-top__section:last-child {
-  flex-grow: 0;
-}
-
-/* Content */
-
-.content {
-  height: 100%;
-  padding: 0 2rem;
-}
-
-/* Page Heading */
-.page-heading {
-  font-size: 2.5rem;
-  text-align: center;
+  justify-content: space-between;
 }
 
 /* Hero */
 
-.hero__button {
-  font-size: 1rem;
+.hero--inverted {
+  color: white;
   background: black;
+}
+
+.hero__title {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+}
+
+.cta__link {
+  background: purple;
   padding: .75rem;
   color: white;
   border-radius: .1rem;
-  text-decoration: none;
 }
 
 /* Form */
 
-.form-item {
+/* .form-item {
   display: block;
   margin-bottom: 1rem;
 }
@@ -101,7 +119,7 @@ header a {
   box-sizing: border-box;
   padding: .5rem;
   font-size: 1rem;
-}
+} */
 
 /* Flashes */
 
@@ -136,7 +154,7 @@ header a {
 
 /* Lists */
 
-.list-page {
+/* .list-page {
   --line-color: lightgrey;
   width: 100%;
   height: 100%;
@@ -183,4 +201,4 @@ header a {
   padding: .5rem;
   width: calc(100% - 1rem);
   border: none;
-}
+} */

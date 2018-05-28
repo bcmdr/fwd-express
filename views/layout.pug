@@ -2,32 +2,23 @@ doctype html
 html
   head
     include includes/gtag-snippet.html
-
     title #{title} ~ Fwd
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='/javascripts/fwd-app.js')
   body
-
-    block header
-      header.navbar-top
-        nav.navbar-top__section
-          ul 
-            li
-              b 
-                a(href="/") #{h.siteName}
-            //- li 
-            //-   a(href='/lists') Lists
-            //- li 
-            //-   a(href='/collections') Collections
-        nav.navbar-top__section
-          ul
-            li
-              a(href='/lists/add') New List
+    nav.main-nav.flex-nav.padded
+      ul
+        li
+          b 
+            a(href="/") #{h.siteName}
+      ul.top-nav
+        li
+          a(href='/lists/add') New List
 
     block messages
       if locals.flashes
-          .flash-messages
+          section.flash-messages
             - const categories = Object.keys(locals.flashes)
             each category in categories
               each message in flashes[category]
@@ -35,5 +26,5 @@ html
                   p.flash--text!= message
                   button.flash--remove(onClick="this.parentElement.remove()") &times;
 
-    section.content
+    main
       block content
