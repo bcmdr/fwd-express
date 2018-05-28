@@ -14,9 +14,7 @@ exports.homePage = (req, res) => {
 }
 
 exports.addList = async (req, res, next) => {
-  const collectionSlug = req.query.collection
-  const collection = collectionSlug ? await Collection.findOne({ slug: req.query.collection }) : {}
-  res.render('editList', { collection, title: `Name Your List` })
+  res.render('addList', { title: `Name Your List` })
 }
 
 exports.saveList = async (req, res) => {

@@ -1,8 +1,9 @@
 extends layout
 
 include mixins/_linkFormAdd
-include mixins/_pageHeading
 
 block content
-  +pageHeading({ title })
-  +linkFormAdd(list)
+  section.hero
+    header.padded.top-padded-2x
+      h2.hero__title Add Link to #{list.title}
+    +linkFormAdd(list)

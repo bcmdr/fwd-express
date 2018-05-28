@@ -21,6 +21,17 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
+input {
+  display: block;
+  font: inherit;
+}
+
+input[type="submit"] {
+  font: inherit;
+  border-radius: 0;
+  border: none;
+}
+
 /* Utilities */
 
 .hidden {
@@ -47,6 +58,10 @@ h1, h2, h3, h4, h5, h6 {
   padding-bottom: 2rem;
 }
 
+.bottom-margined {
+  margin-bottom: 1rem;
+}
+
 /* Nav */
 
 nav ul {
@@ -67,14 +82,27 @@ nav a {
 
 /* Main Nav */
 
-.flex-nav {
+.flex-row {
   display: flex;
+  flex-direction: row;
+}
+
+.flex-row--spaced {
   justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-column--centered {
+  align-items: center;
 }
 
 /* Hero */
 
-.hero--inverted {
+.hero {
   color: white;
   background: black;
 }
@@ -89,11 +117,22 @@ nav a {
   justify-content: center;
 }
 
-.cta__link {
-  background: purple;
-  padding: .75rem;
-  color: white;
+.btn {
   border-radius: .1rem;
+  padding: .75rem;
+}
+
+.btn--primary {
+  background: purple;
+  color: white;
+}
+
+.input {
+  padding: .75rem;
+}
+
+hero form {
+  display: flex;
 }
 
 /* Form */

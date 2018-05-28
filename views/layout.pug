@@ -2,12 +2,12 @@ doctype html
 html
   head
     include includes/gtag-snippet.html
-    title #{title} ~ Fwd
+    title Fwd #{title ? '~ ' + title : ''}
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='/javascripts/fwd-app.js')
   body
-    nav.main-nav.flex-nav.padded
+    nav.main-nav.flex-row.flex-row--spaced.padded
       ul
         li
           b 

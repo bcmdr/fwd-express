@@ -1,5 +1,5 @@
 mixin linkFormAdd(list)
-  form(action=`/lists/${list.slug}/add` method="POST")
-    label.form-item Link
-      input(type="text" name="url")
-    input.form-item(type="submit" value="Save")
+  form(action=`/lists/${list.slug}/add` method="POST").flex-column.flex-column--centered.bottom-padded-2x
+    label(for="url").hidden URL
+    input(type="text" id="url" name="url").input.bottom-margined
+    input(type="submit" value="Save").btn.btn--primary
