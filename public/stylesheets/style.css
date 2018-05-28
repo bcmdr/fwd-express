@@ -135,30 +135,11 @@ hero form {
   display: flex;
 }
 
-/* Form */
+/* Posts */
 
-/* .form-item {
-  display: block;
-  margin-bottom: 1rem;
+.post-card {
+  border-bottom: 1px solid #e0e0e0;
 }
-
-.form-item input[type="text"] {
-  margin-top: .5rem;
-  padding: .5rem;
-  width: 100%;
-}
-
-.list-form {
-  width: 100%;
-  max-width: 240px;
-}
-
-.list-form .form-item {
-  width: 100%;
-  box-sizing: border-box;
-  padding: .5rem;
-  font-size: 1rem;
-} */
 
 /* Flashes */
 
@@ -190,54 +171,3 @@ hero form {
 .flash--info {
   border-color: rgb(82, 229, 255)
 }
-
-/* Lists */
-
-/* .list-page {
-  --line-color: lightgrey;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.list-page__title {
-  font-size: 2.5rem;
-  text-align: center;
-}
-
-.list-page__list a {
-  text-decoration: none;
-}
-
-.list-page__list {
-  color: black;
-  background: white;
-  margin: 0;
-  list-style: none;
-  border: 1px solid lightgrey;
-  border-bottom: none;
-  padding: 1rem;
-  width: 100%;
-  max-width: 480px;
-  flex-grow: 1;
-  border-radius: .5rem .5rem 0 0;
-}
-
-.list-page__list-item {
-  padding: .5rem;
-  border-bottom: 1px solid var(--line-color);
-  margin-bottom: .5rem;
-}
-
-.list-page__form {
-  border-bottom: 1px solid var(--line-color);
-}
-
-.list-page__form-item {
-  font-size: 1rem;
-  padding: .5rem;
-  width: calc(100% - 1rem);
-  border: none;
-} */

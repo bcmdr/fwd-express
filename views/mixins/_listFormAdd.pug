@@ -1,0 +1,5 @@
+mixin listFormAdd()
+  form(action="/lists/add" method="POST").flex-column.flex-column--centered.bottom-padded-2x
+    label(for="title").hidden Title
+    input(type="text" id="title" name="title").input.bottom-margined
+    input(type="submit" value="Save").btn.btn--primary

@@ -7,19 +7,13 @@ block content
         h2.hero__title= list.title
       section.cta.padded.bottom-padded-2x
         a.btn.btn--primary(href=`/lists/${list.slug}/add`) Add Link
-    each post in list.posts
-      - console.log(post)
-      article
-        header
-          h3= post.link.meta.title
-          - const formattedUrl = h.formatUrl(post.link.meta.url)
-          cite= formattedUrl
-        section
-          p= post.link.meta.description
-        //- nav
-        //-   ul
-        //-     li
-        //-       span
-        //-         a(href="#") Upvote
-        //-       span= post.votes
-        //- img
+    section.posts.padded
+      each post in list.posts
+        - console.log(post)
+        article.post-card.padded.shadowed.rounded
+          header
+            h3= post.link.meta.title
+            - const formattedUrl = h.formatUrl(post.link.meta.url)
+            cite= formattedUrl
+          section
+            p= post.link.meta.description
