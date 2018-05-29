@@ -9,8 +9,9 @@ const Post = mongoose.model('Post')
 const metascraper = require('metascraper')
 const got = require('got')
 
-exports.homePage = (req, res) => {
-  res.render('index', { title: `${helpers.siteDescription}` })
+exports.homePage = async (req, res) => {
+  const lists = await List.find()
+  res.render('index', { lists, title: `${helpers.siteDescription}` })
 }
 
 exports.addList = async (req, res, next) => {

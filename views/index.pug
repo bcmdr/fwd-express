@@ -5,3 +5,10 @@ block content
     header.hero__header
       h2.hero__title List and Share Links
     a(href="/lists/add").hero__action Create List
+
+  section.lists.grid.grid-fit.grid-gap.p-3
+    each list in lists
+      article.overflow-hidden.flex.p-2.items-center.border-grey-light.border.rounded
+        header.flex-grow.text-center.p-4
+          a(href=`/lists/${list.slug}`)
+            h3.font-normal= list.title

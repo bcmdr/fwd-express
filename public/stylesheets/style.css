@@ -96,116 +96,17 @@ a {
 
   /* Custom Utilities */
 
-/* .hidden {
-  display: none !important;
+.grid {
+  display: grid;
 }
 
-.padded {
-  padding: 1rem;
+.grid-fit {
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
 }
 
-.padded-1-5x {
-  padding: 1.5rem;
+.grid-gap {
+  grid-gap: 1rem;
 }
-
-.padded-2x {
-  padding: 2rem;
-}
-
-.top-padded-2x {
-  padding-top: 2rem;
-}
-
-.bottom-padded-2x {
-  padding-bottom: 2rem;
-}
-
-.bottom-margined {
-  margin-bottom: 1rem;
-} */
-
-/* Nav */
-
-/* nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-nav li {
-  display: inline-block;
-  padding: .5rem;
-}
-
-nav a {
-  color: inherit;
-  text-decoration: none;
-} */
-
-/* Main Nav */
-
-/* .flex-row {
-  display: flex;
-  flex-direction: row;
-}
-
-.flex-row--spaced {
-  justify-content: space-between;
-}
-
-.flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.flex-column--centered {
-  align-items: center;
-} */
-
-/* Hero */
-
-/* .hero {
-  color: white;
-  background: black;
-}
-
-.hero__title {
-  font-size: 2.5rem;
-  text-align: center;
-}
-
-.cta {
-  display: flex;
-  justify-content: center;
-}
-
-.btn {
-  border-radius: .1rem;
-  padding: .75rem;
-}
-
-.btn--primary {
-  background: purple;
-  color: white;
-}
-
-.input {
-  padding: .75rem;
-}
-
-hero form {
-  display: flex;
-} */
-
-/* Posts */
-
-/* .post-card {
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.post-card h3 {
-  margin-bottom: .3rem;
-} */
 
   /* Flashes */
 

@@ -7,7 +7,6 @@ block content
     a(href=`/lists/${list.slug}/add`).hero__action Add Link
   section.posts
     each post in list.posts
-      //- console.log(post)
       article.overflow-hidden.border-grey-light.border-b.flex.p-4.items-center
         div(class='w-12 h-12 flex-none bg-cover text-center rounded-full' style=`background-image: url(${post.link.meta.logo})` title=`${post.link.meta.title}`)
         header.flex-grow.pl-4

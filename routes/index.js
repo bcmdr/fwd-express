@@ -5,7 +5,7 @@ const linkController = require('../controllers/linkController')
 const listController = require('../controllers/listController')
 const { catchErrors } = require('../handlers/errorHandlers')
 
-router.get('/', listController.homePage)
+router.get('/', catchErrors(listController.homePage))
 
 // router.get('/collections', catchErrors(listController.getCollections))
 // router.get('/collections/add', listController.addCollection)
