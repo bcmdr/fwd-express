@@ -25,21 +25,33 @@ const javascript = {
   This is our postCSS loader which gets fed into the next loader. I'm setting it up in it's own variable because its a didgeridog
 */
 
-const postcss = {
-  loader: 'postcss-loader',
-  options: {
-    plugins() { return [autoprefixer({ browsers: 'last 3 versions' })]; }
-  }
-};
+// const postcssSass = {
+//   loader: 'postcss-loader',
+//   options: {
+//     plugins() { return [autoprefixer({ browsers: 'last 3 versions' })]; }
+//   }
+// };
 
-// this is our sass/css loader. It handles files that are require('something.scss')
-const styles = {
-  test: /\.(scss)$/,
-  // here we pass the options as query params b/c it's short.
-  // remember above we used an object for each loader instead of just a string?
-  // We don't just pass an array of loaders, we run them through the extract plugin so they can be outputted to their own .css file
-  use: ExtractTextPlugin.extract(['css-loader?sourceMap', postcss, 'sass-loader?sourceMap'])
-};
+// // this is our sass/css loader. It handles files that are require('something.scss')
+// const sass = {
+//   test: /\.(scss)$/,
+//   // here we pass the options as query params b/c it's short.
+//   // remember above we used an object for each loader instead of just a string?
+//   // We don't just pass an array of loaders, we run them through the extract plugin so they can be outputted to their own .css file
+//   use: ExtractTextPlugin.extract(['css-loader?sourceMap', postcssSass, 'sass-loader?sourceMap'])
+// };
+
+// Setup postcss for use with tailwind
+const css = {
+  test: /\.css$/,
+  use: ExtractTextPlugin.extract({
+    fallback: 'style-loader',
+    use: [
+      { loader: 'css-loader', options: { importLoaders: 1 } },
+      'postcss-loader'
+    ]
+  })
+}
 
 // We can also use plugins - this one will compress the crap out of our JS
 const uglify = new webpack.optimize.UglifyJsPlugin({ // eslint-disable-line
@@ -66,7 +78,7 @@ const config = {
 
   // remember we said webpack sees everthing as modules and how different loaders are responsible for different file types? Here is is where we implement them. Pass it the rules for our JS and our styles
   module: {
-    rules: [javascript, styles]
+    rules: [javascript, css]
   },
   // finally we pass it an array of our plugins - uncomment if you want to uglify
   // plugins: [uglify]

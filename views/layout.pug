@@ -3,9 +3,8 @@ html
   head
     include includes/gtag-snippet.html
     title Fwd #{title ? '~ ' + title : ''}
+    link(rel='stylesheet', href='/dist/style.css')
     meta(name="viewport" content="width=device-width, initial-scale=1")
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    script(src='/javascripts/fwd-app.js')
   body
     nav.main-nav.flex-row.flex-row--spaced.padded
       ul
