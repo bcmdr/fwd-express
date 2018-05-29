@@ -5,13 +5,12 @@ html
     title Fwd #{title ? '~ ' + title : ''}
     link(rel='stylesheet', href='/dist/style.css')
     meta(name="viewport" content="width=device-width, initial-scale=1")
-  body
-    nav.main-nav.flex-row.flex-row--spaced.padded
-      ul
+  body.font-sans
+    nav.flex.items-center.justify-between.flex-wrap.p-6
+      ul.list-reset
         li
-          b 
-            a(href="/") #{h.siteName}
-      ul.top-nav
+          a(href="/") #{h.siteName}
+      ul.list-reset
         li
           a(href='/lists/add') New List
 

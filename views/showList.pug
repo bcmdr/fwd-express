@@ -1,20 +1,19 @@
 extends layout
 
 block content
-  main
-    section.hero
-      header.padded.top-padded-2x
-        h2.hero__title= list.title
-      section.cta.padded.bottom-padded-2x
-        a.btn.btn--primary(href=`/lists/${list.slug}/add`) Add Link
-    section.posts
-      each post in list.posts
-        //- console.log(post)
-        article.post-card.padded-1-5x.shadowed.rounded
-          header
-            a(href=`${post.link.meta.url}`)
-              h3= post.link.meta.title
-            - const formattedUrl = h.formatUrl(post.link.meta.url)
-            cite= formattedUrl
-          //- section
-          //-   p= post.link.meta.description
+  section.hero.bg-black.text-white.font-thin
+    header.p-6
+      h2.font-thin.text-center.text-4xl= list.title
+    section.bg-purple-dark.flex.justify-center.p-2.text-sm
+      a(href=`/lists/${list.slug}/add`) Add Link
+  section.posts
+    each post in list.posts
+      //- console.log(post)
+      article
+        header
+          a(href=`${post.link.meta.url}`)
+            h3= post.link.meta.title
+          - const formattedUrl = h.formatUrl(post.link.meta.url)
+          cite= formattedUrl
+        //- section
+        //-   p= post.link.meta.description
