@@ -40,6 +40,34 @@ a {
   * @import "components/buttons";
   * @import "components/forms";
   */
+
+.hero {
+  @apply .bg-black .text-white .font-thin
+}
+
+.hero__header {
+  @apply .p-6
+}
+
+.hero__title {
+  @apply .font-thin .text-center .text-4xl
+}
+
+.hero__action {
+  @apply .bg-purple-dark .flex .justify-center .p-2 .text-sm
+}
+
+.hero-form {
+  @apply .flex .flex-col .items-center
+}
+
+.hero-form__input {
+  @apply .mb-6 .p-2
+}
+
+.hero-form__submit {
+  @apply .w-full .bg-purple-dark .text-white .p-2
+}
  
  /**
   * This injects all of Tailwind's utility classes, generated based on your

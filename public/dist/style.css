@@ -685,6 +685,53 @@ a {
   * @import "components/forms";
   */
 
+.hero {
+  background-color: #22292f;
+  color: #fff;
+  font-weight: 200;
+}
+
+.hero__header {
+  padding: 1.5rem;
+}
+
+.hero__title {
+  font-weight: 200;
+  text-align: center;
+  font-size: 2.25rem;
+}
+
+.hero__action {
+  background-color: #794acf;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  padding: .5rem;
+  font-size: .875rem;
+}
+
+.hero-form {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -ms-flex-align: center;
+      align-items: center;
+}
+
+.hero-form__input {
+  margin-bottom: 1.5rem;
+  padding: .5rem;
+}
+
+.hero-form__submit {
+  width: 100%;
+  background-color: #794acf;
+  color: #fff;
+  padding: .5rem;
+}
+
 /**
   * This injects all of Tailwind's utility classes, generated based on your
   * config file.

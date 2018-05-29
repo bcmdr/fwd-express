@@ -1,5 +1,5 @@
 mixin linkFormAdd(list)
-  form(action=`/lists/${list.slug}/add` method="POST").flex-column.flex-column--centered.bottom-padded-2x
+  form(action=`/lists/${list.slug}/add` method="POST").hero-form
     label(for="url").hidden URL
-    input(type="text" id="url" name="url").input.bottom-margined
-    input(type="submit" value="Save").btn.btn--primary
+    input(type="text" id="url" name="url").hero-form__input
+    input(type="submit" value="Save").hero-form__submit.hero__action

@@ -2,7 +2,6 @@ extends layout
 
 block content
   section.hero
-    header.padded.top-padded-2x
+    header.hero__header
       h2.hero__title List and Share Links
-    section.cta.padded.bottom-padded-2x
-      a.btn.btn--primary(href="/lists/add") Create List
+    a(href="/lists/add").hero__action Create List

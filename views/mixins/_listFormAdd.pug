@@ -1,5 +1,5 @@
 mixin listFormAdd()
-  form(action="/lists/add" method="POST").flex-column.flex-column--centered.bottom-padded-2x
+  form(action="/lists/add" method="POST").hero-form
     label(for="title").hidden Title
-    input(type="text" id="title" name="title").input.bottom-margined
-    input(type="submit" value="Save").btn.btn--primary
+    input(type="text" id="title" name="title").hero-form__input
+    input(type="submit" value="Save").hero-form__submit.hero__action
