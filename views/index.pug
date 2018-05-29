@@ -6,9 +6,9 @@ block content
       h2.hero__title List and Share Links
     a(href="/lists/add").hero__action Create List
 
-  section.lists.grid.grid-fit.grid-gap.p-3
+  section.lists.grid.grid-fit.grid-gap-3.p-3.bg-grey-lighter
     each list in lists
-      article.overflow-hidden.flex.p-2.items-center.border-grey-light.border.rounded
+      article.overflow-hidden.flex.p-2.items-center.rounded.bg-white.shadow
         header.flex-grow.text-center.p-4
           a(href=`/lists/${list.slug}`)
-            h3.font-normal= list.title
+            h3.font-normal.text-xl= list.title

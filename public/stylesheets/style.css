@@ -104,8 +104,12 @@ a {
   grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
 }
 
-.grid-gap {
-  grid-gap: 1rem;
+.grid-gap-1 {
+  grid-gap: 0.25rem;
+}
+
+.grid-gap-3 {
+  grid-gap: 0.75rem;
 }
 
   /* Flashes */

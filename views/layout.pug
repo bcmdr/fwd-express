@@ -5,8 +5,8 @@ html
     title Fwd #{title ? '~ ' + title : ''}
     link(rel='stylesheet', href='/dist/style.css')
     meta(name="viewport" content="width=device-width, initial-scale=1")
-  body.font-sans
-    nav.flex.items-center.justify-between.flex-wrap.p-6
+  body.font-sans.bg-grey-lighter
+    nav.flex.items-center.justify-between.flex-wrap.p-6.bg-white
       ul.list-reset
         li
           a(href="/") #{h.siteName}
