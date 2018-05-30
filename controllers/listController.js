@@ -32,7 +32,7 @@ exports.getLists = async (req, res) => {
 exports.getListBySlug = async (req, res, next) => {
   // Find the list and fetch nested posts and their nested links
   const list = await List.findOne({ slug: req.params.slug })
-    .populate({ path: 'posts', populate: { path: 'link', model: 'Link'} })
+    .populate('posts')
   if (!list) { return next() }
   res.render('showList', {list, title: list.title})
 }
@@ -48,38 +48,20 @@ exports.saveLinkToList = async (req, res, next) => {
   const list = await List.findOne({ slug: req.params.slug })
   if (!list) { return next() }
 
-  // Prepare Link for Saving
-  // const linkId = new mongoose.Types.ObjectId()
-  // req.body._id = linkId
-  // Set containing list
-  req.body.lists = [list._id]
+  // Create the post from target url
+  const post = await (new Post({ targetUrl: req.body.url, list: list._id })).save()
 
-  const targetUrl = req.body.url
-  const {body: html, url} = await got(targetUrl)
-  const metadata = await metascraper({html, url})
-  req.body.meta = metadata
-
-  // Save the Link
-  const savedLink = await (new Link(req.body)).save()
-
-  // Create the Post
-  const post = {
-    link: savedLink._id,
-    list: list._id
-  }
-  const savedPost = await (new Post(post)).save()
-
-  // Update containing list
-  list.posts.push(savedPost._id)
+  // Add post to the target list
+  list.posts.push(post._id)
   await list.save()
 
   // Redirect On Success
   res.redirect(`/lists/${req.params.slug}`)
 }
 
-exports.editPost = async (req, res, next) => {
-  const post = await Post.findOne({ shortId: req.params.shortId })
-    .populate({ path: 'list', model: 'List'})
-  if (!post) return next()
-  res.render('editPost', {post, title: `Edit Post on ${post.list.title}`})
-}
+// exports.editPost = async (req, res, next) => {
+//   const post = await Post.findOne({ shortId: req.params.shortId })
+//     .populate({ path: 'list', model: 'List'})
+//   if (!post) return next()
+//   res.render('editPost', {post, title: `Edit Post on ${post.list.title}`})
+// }
