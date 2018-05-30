@@ -77,29 +77,9 @@ exports.saveLinkToList = async (req, res, next) => {
   res.redirect(`/lists/${req.params.slug}`)
 }
 
-// exports.getCollections = async (req, res) => {
-//   const collections = await Collection.find()
-//   res.render('collections', { title: 'Collections', collections })
-// }
-
-// exports.getCollectionBySlug = async (req, res, next) => {
-//   const collection = await Collection.findOne({ slug: req.params.slug })
-//   let lists = await List.find({ collectionId: collection._id })
-//   lists = await Promise.all(lists.map( async (list) => {
-//     // https://stackoverflow.com/questions/40140149/use-async-await-with-array-map
-//     list.items = await Item.find({ listId: list._id })
-//     return list
-//   }))
-//   if (!collection) return next()
-//   res.render('collectionPage', { collection, lists, title: collection.title })
-// }
-
-// exports.saveCollection = async (req, res) => {
-//   const collection = await (new Collection(req.body)).save()
-//   req.flash('success', `Successfully created ${collection.title}`)
-//   res.redirect(`/collections/${collection.slug}`)
-// }
-
-// exports.addCollection = (req, res) => {
-//   res.render('editCollection', { title: 'New Collection' })
-// }
+exports.editPost = async (req, res, next) => {
+  const post = await Post.findOne({ shortId: req.params.shortId })
+    .populate({ path: 'list', model: 'List'})
+  if (!post) return next()
+  res.render('editPost', {post, title: `Edit Post on ${post.list.title}`})
+}

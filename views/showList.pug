@@ -8,9 +8,14 @@ block content
   section.posts
     each post in list.posts
       article.overflow-hidden.border-grey-light.border-b.flex.p-4.items-center
-        div(class='w-12 h-12 flex-none bg-cover text-center rounded-full' style=`background-image: url(${post.link.meta.logo})` title=`${post.link.meta.title}`)
-        header.flex-grow.pl-4
+        section(class='w-12 h-12 flex-none bg-cover text-center rounded-full' style=`background-image: url(${post.link.meta.logo})` title=`${post.link.meta.title}`)
+        section.flex-grow.pl-4.pr-4
           a(href=`${post.link.meta.url}`)
-            h3.pb-1= post.link.meta.title
-          cite= h.formatUrl(post.link.meta.url)
+            h3.pb-1.font-semibold.tracking-tight= post.link.meta.title
+          cite.text-sm= h.formatUrl(post.link.meta.url)
+        section.flex-none
+          ul.list-reset.text-xs.flex.text-grey-dark
+            li.mr-3
+              a(href=`/posts/${post.shortId}/edit`)
+                | &times
         
