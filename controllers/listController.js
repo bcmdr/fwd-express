@@ -70,15 +70,17 @@ exports.saveLinkToList = async (req, res, next) => {
 exports.removeLinkFromList = async (req, res, next) => {
 
   // Remove the post reference from list
-  await List.findOneAndUpdate(
+  const removeFromList = List.findOneAndUpdate(
     { slug: req.params.slug },
     { $pull: { posts: req.params.postId } }
   ).exec()
 
   // Remove the post document from db
-  await Post.findOneAndRemove(
+  const removePost = Post.findOneAndRemove(
     { _id: req.params.postId }
   ).exec()
+
+  await Promise.all([removeFromList, removePost])
 
   res.redirect(`/lists/${req.params.slug}`)
 }

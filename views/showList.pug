@@ -3,7 +3,8 @@ extends layout
 block content
   section.hero
     header.hero__header
-      h2.hero__title= list.title
+      h2.hero__title
+        a(href=`/lists/${list.slug}`)= list.title
     a(href=`/lists/${list.slug}/add`).hero__action Add Link
   section.posts
     each post in list.posts

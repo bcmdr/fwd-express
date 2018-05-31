@@ -37,6 +37,22 @@ exports.flashValidationErrors = (err, req, res, next) => {
   res.redirect('back');
 };
 
+/*
+  Link Fetching Error
+
+  Detect if there are metascraper or got errors that we can nicely show via flash messages
+*/
+
+exports.flashLinkErrors = (err, req, res, next) => {
+  if (!err.code) return next(err);
+  // link not found errors look like
+  if(err.code !== 'ENOTFOUND') {
+    return next(err)
+  }
+  req.flash('error', `No website found at ${err.url}. Might be a typo in the link you gave.`);
+  res.redirect('back');
+};
+
 
 /*
   Development Error Handler
