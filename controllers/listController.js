@@ -43,13 +43,21 @@ exports.addLinkToList = async (req, res, next) => {
   res.render('addLink', {list, title: `Add Link to ${list.title}`})
 }
 
+exports.getMetaData = async (req, res, next) => {
+  // scrape and update metadata of target url
+  const { body: html, url } = await got(req.body.targetUrl)
+  req.body.meta = await metascraper({ html, url })
+  next()
+}
+
 exports.saveLinkToList = async (req, res, next) => {
   // Find the Containing List
   const list = await List.findOne({ slug: req.params.slug })
   if (!list) { return next() }
+  req.body.list = list._id
 
-  // Create the post from target url
-  const post = await (new Post({ targetUrl: req.body.url, list: list._id })).save()
+  // Create the post
+  const post = await (new Post(req.body)).save()
 
   // Add post to the target list
   list.posts.push(post._id)
@@ -59,9 +67,18 @@ exports.saveLinkToList = async (req, res, next) => {
   res.redirect(`/lists/${req.params.slug}`)
 }
 
-// exports.editPost = async (req, res, next) => {
-//   const post = await Post.findOne({ shortId: req.params.shortId })
-//     .populate({ path: 'list', model: 'List'})
-//   if (!post) return next()
-//   res.render('editPost', {post, title: `Edit Post on ${post.list.title}`})
-// }
+exports.removeLinkFromList = async (req, res, next) => {
+
+  // Remove the post reference from list
+  await List.findOneAndUpdate(
+    { slug: req.params.slug },
+    { $pull: { posts: req.params.postId } }
+  ).exec()
+
+  // Remove the post document from db
+  await Post.findOneAndRemove(
+    { _id: req.params.postId }
+  ).exec()
+
+  res.redirect(`/lists/${req.params.slug}`)
+}

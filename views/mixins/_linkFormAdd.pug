@@ -1,5 +1,5 @@
 mixin linkFormAdd(list)
   form(action=`/lists/${list.slug}/add` method="POST").hero-form
-    label(for="url").hidden URL
-    input(type="text" id="url" name="url").hero-form__input
+    label(for="targetUrl").hidden URL
+    input(type="text" id="url" name="targetUrl").hero-form__input
     input(type="submit" value="Save").hero-form__submit.hero__action
