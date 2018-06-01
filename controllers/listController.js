@@ -43,10 +43,37 @@ exports.addLinkToList = async (req, res, next) => {
   res.render('addLink', {list, title: `Add Link to ${list.title}`})
 }
 
+exports.searchNonUrls = async (req, res, next) => {
+  // if target url resembles a query instead, get url of top search engine result
+
+  if ( req.body.targetUrl.includes('.') ) {
+    return next()
+  }
+
+  const subscriptionKey = 'fe91fd20d1ba4aaca8d7385196dc7968'
+  const host = 'api.cognitive.microsoft.com'
+  const path = '/bing/v7.0/search'
+  const searchUrl = host + path + '?q=' + encodeURIComponent(req.body.targetUrl)
+
+  const { body } = await got(searchUrl, {
+    headers : {
+      'Ocp-Apim-Subscription-Key' : subscriptionKey,
+    }
+  })
+
+  if (!body) return next()
+
+  const results = JSON.parse(body)
+  req.body.targetUrl = results.webPages.value[0].url
+  console.log(results)
+  next()
+}
+
 exports.getMetaData = async (req, res, next) => {
   // scrape and update metadata of target url
   const { body: html, url } = await got(req.body.targetUrl)
   req.body.meta = await metascraper({ html, url })
+  console.log(req.body.meta)
   next()
 }
 
