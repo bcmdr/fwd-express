@@ -5,7 +5,6 @@ const List = mongoose.model('List')
 const Item = mongoose.model('Item')
 const Link = mongoose.model('Link')
 const Post = mongoose.model('Post')
-
 const metascraper = require('metascraper')
 const got = require('got')
 
@@ -45,36 +44,42 @@ exports.addLinkToList = async (req, res, next) => {
 
 exports.searchNonUrls = async (req, res, next) => {
   // if target url resembles a query instead, get url of top search engine result
-
   if ( req.body.targetUrl.includes('.') ) {
     return next()
   }
 
-  const subscriptionKey = 'fe91fd20d1ba4aaca8d7385196dc7968'
+  // Microsoft Web Search API
+  const subscriptionKey = process.env.SEARCH_KEY
   const host = 'api.cognitive.microsoft.com'
   const path = '/bing/v7.0/search'
   const searchUrl = host + path + '?q=' + encodeURIComponent(req.body.targetUrl)
-
   const { body } = await got(searchUrl, {
     headers : {
       'Ocp-Apim-Subscription-Key' : subscriptionKey,
     }
   })
 
+  // No results found
   if (!body) return next()
 
+  // Parse results
   const results = JSON.parse(body)
-  req.body.targetUrl = results.webPages.value[0].url
-  console.log(results)
+  const { name: title, url } = results.webPages.value[0]
+  req.body.targetUrl = url
+  req.body.meta = { title, url }
   next()
 }
 
 exports.getMetaData = async (req, res, next) => {
   // scrape and update metadata of target url
-  const { body: html, url } = await got(req.body.targetUrl)
-  req.body.meta = await metascraper({ html, url })
-  console.log(req.body.meta)
-  next()
+  try {
+    const { body: html, url } = await got(req.body.targetUrl, { timeout: 5000 })
+    req.body.meta = await metascraper({ html, url })
+  } catch (error) {
+    // TODO: log error
+  } finally {
+    next()
+  }
 }
 
 exports.saveLinkToList = async (req, res, next) => {

@@ -44,7 +44,7 @@ exports.flashValidationErrors = (err, req, res, next) => {
 */
 
 exports.flashLinkErrors = (err, req, res, next) => {
-  if (!err.code) return next(err);
+  if (!err.code) return next(err)
   // link not found errors look like
   if(err.code !== 'ENOTFOUND') {
     return next(err)
