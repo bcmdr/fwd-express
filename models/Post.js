@@ -27,7 +27,7 @@ const postSchema = new Schema({
   targetUrl: {
     type: String, 
     trim: true, 
-    required: 'Please enter a url.'
+    required: 'Please enter a search term or website.'
   },
   meta: {
     type: Schema.Types.Mixed

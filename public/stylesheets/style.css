@@ -66,7 +66,7 @@ a {
 }
 
 .hero-form__submit {
-  @apply .w-full .bg-purple-dark .text-white .p-2
+  @apply .w-full .bg-purple-dark .text-white .p-2 .text-center
 }
  
  /**

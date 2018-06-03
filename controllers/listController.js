@@ -43,6 +43,8 @@ exports.addLinkToList = async (req, res, next) => {
 }
 
 exports.searchNonUrls = async (req, res, next) => {
+  if (!req.body.targetUrl) return next();
+
   // if target url resembles a query instead, get url of top search engine result
   if ( req.body.targetUrl.includes('.') ) {
     return next()
@@ -71,6 +73,8 @@ exports.searchNonUrls = async (req, res, next) => {
 }
 
 exports.getMetaData = async (req, res, next) => {
+  if (!req.body.targetUrl) return next();
+
   // scrape and update metadata of target url
   try {
     const { body: html, url } = await got(req.body.targetUrl, { timeout: 5000 })
@@ -83,13 +87,13 @@ exports.getMetaData = async (req, res, next) => {
 }
 
 exports.saveLinkToList = async (req, res, next) => {
+  // Create the post
+  const post = await (new Post(req.body)).save()
+
   // Find the Containing List
   const list = await List.findOne({ slug: req.params.slug })
   if (!list) { return next() }
   req.body.list = list._id
-
-  // Create the post
-  const post = await (new Post(req.body)).save()
 
   // Add post to the target list
   list.posts.push(post._id)
