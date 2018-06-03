@@ -708,6 +708,7 @@ a {
   -ms-flex-pack: center;
       justify-content: center;
   padding: .5rem;
+  text-align: center;
 }
 
 .hero-form {

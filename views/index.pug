@@ -8,7 +8,7 @@ block content
 
   section.lists.p-3.flex.flex-wrap
     each list in lists
-      article.overflow-hidden.flex.p-2.items-center.rounded.bg-white.shadow.m-1.flex-grow.flex-shrink
-        header.flex-grow.text-center.p-4
+      article.flex.flex-grow.flex-shrink.items-center.rounded.bg-white.shadow.m-1
+        header.flex-grow.text-center
           h3.font-normal.text-xl
-            a(href=`/lists/${list.slug}`)= list.title
+            a.block.p-4(href=`/lists/${list.slug}`)= list.title
