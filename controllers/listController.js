@@ -76,14 +76,9 @@ exports.getMetaData = async (req, res, next) => {
   if (!req.body.targetUrl) return next();
 
   // scrape and update metadata of target url
-  try {
-    const { body: html, url } = await got(req.body.targetUrl, { timeout: 5000 })
-    req.body.meta = await metascraper({ html, url })
-  } catch (error) {
-    // TODO: log error
-  } finally {
-    next()
-  }
+  const { body: html, url } = await got(req.body.targetUrl, { timeout: 5000 })
+  req.body.meta = await metascraper({ html, url })
+  next()
 }
 
 exports.saveLinkToList = async (req, res, next) => {

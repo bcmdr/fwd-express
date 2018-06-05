@@ -9,7 +9,10 @@ const linkSchema = new Schema({
     type: String,
     'default': shortid.generate
   },
-  meta: Schema.Types.Mixed,
+  meta: {
+    type: Schema.Types.Mixed,
+    required: 'Could not find meta data.'
+  },
   url: {
     type: String,
     trim: true,
