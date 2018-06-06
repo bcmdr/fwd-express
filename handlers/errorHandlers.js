@@ -44,7 +44,6 @@ exports.flashValidationErrors = (err, req, res, next) => {
 */
 
 exports.flashLinkErrors = (err, req, res, next) => {
-
   if (!err.code) return next(err)
 
   const errorMessages = {

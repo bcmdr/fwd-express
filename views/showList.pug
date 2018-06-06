@@ -8,10 +8,10 @@ block content
     a(href=`/lists/${list.slug}/add`).hero__action Add Link
   section.posts
     each post in list.posts
-      article.overflow-hidden.border-grey-light.border-b.flex.p-4.items-center
-        a(class='block w-12 h-12 flex-none bg-cover rounded-full' style=`background-image: url(${post.meta.image || post.meta.logo})` href=`${post.meta.url}` title=`${post.meta.title}`)
-        section.flex-grow.pl-4.pr-4
-          h3.pb-1.font-semibold.tracking-tight
+      article.overflow-hidden.border-grey-light.border-b.flex.p-4.items-center.bg-white
+        //- a(class='block w-12 h-12 flex-none bg-cover rounded-full' style=`background-image: url(${post.meta.image || post.meta.logo})` href=`${post.meta.url}` title=`${post.meta.title}`)
+        section.flex-grow.pr-4
+          h3.pb-1.font-semibold.tracking-tight.inline-block
             a(href=`${post.meta.url}`)= post.meta.title
           cite.text-sm
             a(href=`${post.meta.url}`)= h.formatUrl(post.meta.url)

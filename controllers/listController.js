@@ -66,13 +66,19 @@ exports.searchNonUrls = async (req, res, next) => {
 
   // Parse results
   const results = JSON.parse(body)
-  const { name: title, url } = results.webPages.value[0]
+  const topResult = results.webPages.value[0]
+  const { name: title, url } = topResult
+  console.log(topResult)
   req.body.targetUrl = url
   req.body.meta = { title, url }
   next()
 }
 
 exports.getMetaData = async (req, res, next) => {
+
+  // skip metascraper for now
+  return next()
+
   if (!req.body.targetUrl) return next();
 
   // scrape and update metadata of target url
