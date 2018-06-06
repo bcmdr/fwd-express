@@ -11,13 +11,21 @@ html
       ul.list-reset.flex
         li
           a(href="/") #{h.siteName}
-      ul.list-reset.flex
-        li.pl-3
-          a(href='/lists/add') New List
-        li.pl-3
-          a(href='/register') Register
-        li.pl-3
-          a(href='/login') Login
+      ul.list-reset.flex.items-center
+        if user
+          li.pl-3
+            a(href='/lists/add') New List
+          li.pl-3
+            a(href='/logout') Logout
+          li.pl-3.flex.items-center
+            a(href='/account')
+              img.avatar(src=user.gravatar + '&d=retro').w-8.h-auto.rounded-full
+        else 
+          li.pl-3
+            a(href='/register') Register
+          li.pl-3
+            a(href='/login') Login
+        
 
     block messages
       if locals.flashes

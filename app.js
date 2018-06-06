@@ -15,6 +15,7 @@ const usersRouter = require('./routes/users');
 const links = require('./links');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
+require('./handlers/passport')
 
 var app = express();
 
