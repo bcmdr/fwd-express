@@ -15,7 +15,7 @@ router.get('/lists/:slug', catchErrors(listController.getListBySlug))
 router.get('/lists/:slug/add', catchErrors(listController.addLinkToList))
 router.post('/lists/:slug/add', 
   catchErrors(listController.searchNonUrls),
-  catchErrors(listController.getMetaData),
+  // catchErrors(listController.getMetaData),
   catchErrors(listController.saveLinkToList)
 )
 router.get('/lists/:slug/remove/:postId', catchErrors(listController.removeLinkFromList))

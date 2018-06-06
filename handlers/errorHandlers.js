@@ -44,13 +44,14 @@ exports.flashValidationErrors = (err, req, res, next) => {
 */
 
 exports.flashLinkErrors = (err, req, res, next) => {
-
   if (!err.code) return next(err)
-  // link not found errors look like
-  if(err.code !== 'ENOTFOUND') {
-    return next(err)
+
+  const errorMessages = {
+    'ENOTFOUND': `Couldn't find what you searched for.`,
+    'ETIMEDOUT': `Searching took longer than expected.`
   }
-  req.flash('error', `No website found at ${err.url}. Might be a typo in the link you gave.`);
+
+  req.flash('error', `${errorMessages[err.code]} Please try adding/removing search terms or a different URL.`);
   res.redirect('back');
 };
 
