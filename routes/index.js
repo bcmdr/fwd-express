@@ -22,5 +22,6 @@ router.post('/lists/:slug/add',
 router.get('/lists/:slug/remove/:postId', catchErrors(listController.removeLinkFromList))
 
 router.get('/login', userController.loginForm)
+router.get('/register', userController.registerForm)
 
 module.exports = router;

@@ -722,8 +722,9 @@ a {
       align-items: center;
 }
 
-.hero-form__label {
-  margin-bottom: 1rem;
+.hero-form__label > input {
+  display: block;
+  margin-top: .75rem;
 }
 
 .hero-form__input {

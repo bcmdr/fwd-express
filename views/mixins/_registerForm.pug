@@ -1,0 +1,11 @@
+mixin registerForm()
+  form.form(action="/register" method="POST").hero-form
+    label(for="name").hero-form__label Name
+      input(type="name" id="name" name="name").hero-form__input
+    label(for="email").hero-form__label Email
+      input(type="email" id="email" name="email").hero-form__input
+    label(for="password").hero-form__label Password
+      input(type="password" id="password" name="password").hero-form__input
+    label(for="password-confirm").hero-form__label Confirm Password
+      input(type="password-confirm" id="password-confirm" name="password-confirm").hero-form__input
+    input.button(type="submit" value="Register").hero-form__submit.hero__action

@@ -61,8 +61,8 @@ a {
   @apply .flex .flex-col .items-center
 }
 
-.hero-form__label {
-  @apply .mb-4
+.hero-form__label > input {
+  @apply .block .mt-3
 }
 
 .hero-form__input {
