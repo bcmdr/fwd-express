@@ -709,6 +709,8 @@ a {
       justify-content: center;
   padding: .5rem;
   text-align: center;
+  color: #fff;
+  width: 100%;
 }
 
 .hero-form {
@@ -720,17 +722,13 @@ a {
       align-items: center;
 }
 
+.hero-form__label {
+  margin-bottom: 1rem;
+}
+
 .hero-form__input {
   margin-bottom: 1.5rem;
   padding: .5rem;
-}
-
-.hero-form__submit {
-  width: 100%;
-  background-color: #794acf;
-  color: #fff;
-  padding: .5rem;
-  text-align: center;
 }
 
 /**

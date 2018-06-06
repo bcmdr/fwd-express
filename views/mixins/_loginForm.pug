@@ -1,0 +1,7 @@
+mixin loginForm()
+  form.form(action="/login" method="POST").hero-form
+    label(for="email").hero-form__label Email
+    input(type="email" id="email" name="email").hero-form__input
+    label(for="password").hero-form__label Password
+    input(type="password" id="password" name="password").hero-form__input
+    input.button(type="submit" value="Log In").hero-form__submit.hero__action

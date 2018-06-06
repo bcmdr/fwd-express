@@ -8,12 +8,14 @@ html
     
   body.font-sans.bg-grey-lighter
     nav.flex.items-center.justify-between.flex-no-wrap.p-3.bg-white
-      ul.list-reset
+      ul.list-reset.flex
         li
           a(href="/") #{h.siteName}
-      ul.list-reset
-        li
+      ul.list-reset.flex
+        li.pl-3
           a(href='/lists/add') New List
+        li.pl-3
+          a(href='/login') Login
 
     block messages
       if locals.flashes

@@ -3,6 +3,7 @@ var router = express.Router()
 const linksSource = require('../links')
 const linkController = require('../controllers/linkController')
 const listController = require('../controllers/listController')
+const userController = require('../controllers/userController')
 const { catchErrors } = require('../handlers/errorHandlers')
 
 router.get('/', catchErrors(listController.homePage))
@@ -19,5 +20,7 @@ router.post('/lists/:slug/add',
   catchErrors(listController.saveLinkToList)
 )
 router.get('/lists/:slug/remove/:postId', catchErrors(listController.removeLinkFromList))
+
+router.get('/login', userController.loginForm)
 
 module.exports = router;

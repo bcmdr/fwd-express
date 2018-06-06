@@ -54,19 +54,19 @@ a {
 }
 
 .hero__action {
-  @apply .bg-purple-dark .flex .justify-center .p-2 .text-center
+  @apply .bg-purple-dark .flex .justify-center .p-2 .text-center .text-white .w-full
 }
 
 .hero-form {
   @apply .flex .flex-col .items-center
 }
 
-.hero-form__input {
-  @apply .mb-6 .p-2
+.hero-form__label {
+  @apply .mb-4
 }
 
-.hero-form__submit {
-  @apply .w-full .bg-purple-dark .text-white .p-2 .text-center
+.hero-form__input {
+  @apply .mb-6 .p-2
 }
  
  /**
