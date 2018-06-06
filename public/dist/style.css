@@ -730,6 +730,7 @@ a {
 .hero-form__input {
   margin-bottom: 1.5rem;
   padding: .5rem;
+  width: 16rem;
 }
 
 /**
