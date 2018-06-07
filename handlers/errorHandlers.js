@@ -46,12 +46,15 @@ exports.flashValidationErrors = (err, req, res, next) => {
 exports.flashLinkErrors = (err, req, res, next) => {
   if (!err.code) return next(err)
 
+  console.log(err)
+
   const errorMessages = {
-    'ENOTFOUND': `Couldn't find what you searched for.`,
-    'ETIMEDOUT': `Searching took longer than expected.`
+    'ENOTFOUND': `Something crucial could not be found.`,
+    'ETIMEDOUT': `Something crucial is taking longer than expected.`,
+    'ECONNECTION': `Something went wrong with our connection.`
   }
 
-  req.flash('error', `${errorMessages[err.code]} Please try adding/removing search terms or a different URL.`);
+  req.flash('error', `${errorMessages[err.code] || 'Something went wrong.'}`);
   res.redirect('back');
 };
 

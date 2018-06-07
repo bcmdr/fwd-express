@@ -25,8 +25,6 @@ router.get('/lists/:slug/remove/:postId', catchErrors(listController.removeLinkF
 router.get('/login', userController.loginForm)
 router.post('/login', authController.login)
 router.get('/logout', authController.logout)
-router.get('/forgot', userController.forgotForm)
-
 
 router.get('/register', userController.registerForm)
 
@@ -38,5 +36,13 @@ router.post('/register',
 
 router.get('/account', authController.isLoggedIn, userController.account)
 router.post('/account', catchErrors(userController.updateAccount))
+
+router.get('/account/forgot', authController.forgotForm)
+router.post('/account/forgot', catchErrors(authController.forgot))
+router.get('/account/reset/:token', catchErrors(authController.reset))
+router.post('/account/reset/:token', 
+  authController.confirmedPasswords,
+  catchErrors(authController.updatePassword)
+)
 
 module.exports = router;
