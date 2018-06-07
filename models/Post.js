@@ -20,19 +20,25 @@ const postSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  votes: {
-    type: Number,
-    default: 1
-  },
   targetUrl: {
     type: String, 
     trim: true, 
     required: 'Please enter a search term or website.'
   },
   meta: {
-    type: Schema.Types.Mixed
+    type: Schema.Types.Mixed,
+    required: 'Please provide meta data'
   },
-  list: { type: Schema.Types.ObjectId, ref: 'List' }
+  list: { 
+    type: Schema.Types.ObjectId, 
+    ref: 'List',
+    required: 'Please provide a containing list.'
+  },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: 'Please provide the owning user.'
+  }
 })
 
 module.exports = mongoose.model('Post', postSchema)

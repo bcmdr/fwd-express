@@ -24,7 +24,11 @@ const listSchema = new Schema({
     trim: true
   },
   collectionId: String,
-  posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
+  posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
 
 listSchema.pre('save', async function(next) {

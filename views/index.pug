@@ -7,8 +7,9 @@ block content
     a(href="/lists/add").hero__action Create List
 
   section.lists.p-3.flex.flex-wrap
-    each list in lists
-      article.flex.flex-grow.flex-shrink.items-center.rounded.bg-white.shadow.m-1
-        header.flex-grow.text-center
-          h3.font-normal.text-xl
-            a.block.p-4(href=`/lists/${list.slug}`)= list.title
+    if user
+      each list in lists
+        article.flex.flex-grow.flex-shrink.items-center.rounded.bg-white.shadow.m-1
+          header.flex-grow.text-center
+            h3.font-normal.text-xl
+              a.block.p-4(href=`/lists/${list.slug}`)= list.title

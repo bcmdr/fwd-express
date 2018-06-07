@@ -11,7 +11,7 @@ router.get('/', catchErrors(listController.homePage))
 
 router.get('/lists', catchErrors(listController.getLists))
 router.get('/lists/add', authController.isLoggedIn, catchErrors(listController.addList))
-router.post('/lists/add', catchErrors(listController.saveList))
+router.post('/lists/add', authController.isLoggedIn, catchErrors(listController.saveList))
 
 router.get('/lists/:slug', catchErrors(listController.getListBySlug))
 router.get('/lists/:slug/add', catchErrors(listController.addLinkToList))

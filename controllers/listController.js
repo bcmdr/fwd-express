@@ -9,7 +9,7 @@ const metascraper = require('metascraper')
 const got = require('got')
 
 exports.homePage = async (req, res) => {
-  const lists = await List.find()
+  const lists = req.user ? await List.find({ owner: req.user._id }) : {}
   res.render('index', { lists, title: `${helpers.siteDescription}` })
 }
 
@@ -18,6 +18,7 @@ exports.addList = async (req, res, next) => {
 }
 
 exports.saveList = async (req, res) => {
+  req.body.owner = req.user._id
   const list = await (new List(req.body)).save()
   // req.flash('success', `Successfully created ${list.title}`)
   res.redirect(`/lists/${list.slug}`)
@@ -88,13 +89,14 @@ exports.getMetaData = async (req, res, next) => {
 }
 
 exports.saveLinkToList = async (req, res, next) => {
-  // Create the post
-  const post = await (new Post(req.body)).save()
-
   // Find the Containing List
   const list = await List.findOne({ slug: req.params.slug })
   if (!list) { return next() }
   req.body.list = list._id
+
+  // Create the post
+  req.body.owner = req.user._id
+  const post = await (new Post(req.body)).save()
 
   // Add post to the target list
   list.posts.push(post._id)
