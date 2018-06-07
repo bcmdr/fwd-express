@@ -104,14 +104,40 @@ exports.saveLinkToList = async (req, res, next) => {
   res.redirect(`/lists/${req.params.slug}`)
 }
 
-exports.removeLinkFromList = async (req, res, next) => {
+exports.getList = async(req, res, next) => {
+  req.list = await List.findOne({ slug: req.params.slug })
+  next()
+}
 
+exports.confirmListOwner = async (req, res, next) => {
+  if (!confirmOwner(req.list, req.user)) {
+    req.flash('error', `Sorry, you don't have permission to do that.`)
+    return res.redirect('back')
+  }
+  next()
+}
+
+exports.getListAndConfirmOwner = async (req, res, next) => {
   // Find the containing list in the db
   const list = await List.findOne({ slug: req.params.slug })
   if (!confirmOwner(list, req.user)) {
     req.flash('error', `Sorry, you don't have permission to do that.`)
     return res.redirect('back')
   }
+  req.list = list
+  next()
+}
+
+exports.removeLinkFromList = async (req, res, next) => {
+
+  const list = req.list
+
+  // // Find the containing list in the db
+  // const list = await List.findOne({ slug: req.params.slug })
+  // if (!confirmOwner(list, req.user)) {
+  //   req.flash('error', `Sorry, you don't have permission to do that.`)
+  //   return res.redirect('back')
+  // }
 
   // Remove the post reference from list
   list.set( { $pull: { posts: req.params.postId } } )

@@ -20,7 +20,11 @@ router.post('/lists/:slug/add',
   // catchErrors(listController.getMetaData),
   catchErrors(listController.saveLinkToList)
 )
-router.get('/lists/:slug/remove/:postId', catchErrors(listController.removeLinkFromList))
+router.get('/lists/:slug/remove/:postId', 
+  catchErrors(listController.getList),
+  catchErrors(listController.confirmListOwner),
+  catchErrors(listController.removeLinkFromList)
+)
 
 router.get('/login', userController.loginForm)
 router.post('/login', authController.login)
