@@ -8,6 +8,10 @@ const Post = mongoose.model('Post')
 const metascraper = require('metascraper')
 const got = require('got')
 
+const confirmOwner = (doc, user) => {
+  return user && doc.owner.equals(user._id)
+}
+
 exports.homePage = async (req, res) => {
   const lists = req.user ? await List.find({ owner: req.user._id }) : {}
   res.render('index', { lists, title: `${helpers.siteDescription}` })
@@ -22,11 +26,6 @@ exports.saveList = async (req, res) => {
   const list = await (new List(req.body)).save()
   // req.flash('success', `Successfully created ${list.title}`)
   res.redirect(`/lists/${list.slug}`)
-}
-
-exports.getLists = async (req, res) => {
-  const lists = await List.find()
-  res.render('lists', { title: 'Lists', lists })
 }
 
 exports.getListBySlug = async (req, res, next) => {
@@ -69,7 +68,6 @@ exports.searchNonUrls = async (req, res, next) => {
   const results = JSON.parse(body)
   const topResult = results.webPages.value[0]
   const { name: title, url } = topResult
-  console.log(topResult)
   req.body.targetUrl = url
   req.body.meta = { title, url }
   next()
@@ -108,11 +106,21 @@ exports.saveLinkToList = async (req, res, next) => {
 
 exports.removeLinkFromList = async (req, res, next) => {
 
+  // Find the containing list in the db
+  const list = await List.findOne({ slug: req.params.slug })
+  if (!confirmOwner(list, req.user)) {
+    req.flash('error', `Sorry, you don't have permission to do that.`)
+    return res.redirect('back')
+  }
+
   // Remove the post reference from list
-  const removeFromList = List.findOneAndUpdate(
-    { slug: req.params.slug },
-    { $pull: { posts: req.params.postId } }
-  ).exec()
+  list.set( { $pull: { posts: req.params.postId } } )
+  const removeFromList = list.save()
+
+  // const removeFromList = List.findOneAndUpdate(
+  //   { slug: req.params.slug },
+  //   { $pull: { posts: req.params.postId } }
+  // ).exec()
 
   // Remove the post document from db
   const removePost = Post.findOneAndRemove(
