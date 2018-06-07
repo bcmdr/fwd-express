@@ -25,6 +25,8 @@ router.get('/lists/:slug/remove/:postId', catchErrors(listController.removeLinkF
 router.get('/login', userController.loginForm)
 router.post('/login', authController.login)
 router.get('/logout', authController.logout)
+router.get('/forgot', userController.forgotForm)
+
 
 router.get('/register', userController.registerForm)
 

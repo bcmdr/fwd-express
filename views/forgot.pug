@@ -1,10 +1,9 @@
 extends layout
 
-include mixins/_loginForm
 include mixins/_forgotForm
 
 block content
   section.hero
     header.hero__header
-      h2.hero__title= title
-    +loginForm()
+      h2.hero__title Forgot Password
+    +forgotForm()

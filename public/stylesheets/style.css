@@ -68,6 +68,10 @@ a {
 .hero-form__input {
   @apply .mb-6 .p-2 .w-64
 }
+
+.hero-form__link {
+  @apply .mb-6 .w-64
+}
  
  /**
   * This injects all of Tailwind's utility classes, generated based on your

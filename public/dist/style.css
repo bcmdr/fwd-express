@@ -733,6 +733,11 @@ a {
   width: 16rem;
 }
 
+.hero-form__link {
+  margin-bottom: 1.5rem;
+  width: 16rem;
+}
+
 /**
   * This injects all of Tailwind's utility classes, generated based on your
   * config file.
