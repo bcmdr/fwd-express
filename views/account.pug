@@ -1,0 +1,9 @@
+extends layout
+
+include mixins/_accountForm
+
+block content
+  section.hero
+    header.hero__header
+      h2.hero__title= title
+    +accountForm()

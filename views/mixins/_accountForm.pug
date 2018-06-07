@@ -1,0 +1,7 @@
+mixin accountForm()
+  form.form(method="POST").hero-form
+    label(for="name").hero-form__label Name
+      input(type="text" id="name" name="name" value=user.name).hero-form__input
+    label(for="email").hero-form__label Email
+      input(type="email" id="email" name="email" value=user.email).hero-form__input
+    input(type="submit" value="Save").hero__action
