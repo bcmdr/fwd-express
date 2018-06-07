@@ -5,7 +5,8 @@ block content
     header.hero__header
       h2.hero__title
         a(href=`/lists/${list.slug}`)= list.title
-    a(href=`/lists/${list.slug}/add`).hero__action Add Link
+    if (user && list.owner.equals(user._id))
+      a(href=`/lists/${list.slug}/add`).hero__action Add Link
   section.posts
     each post in list.posts
       article.overflow-hidden.border-grey-light.border-b.flex.p-4.items-center.bg-white
@@ -17,7 +18,8 @@ block content
             a(href=`${post.meta.url}`)= h.formatUrl(post.meta.url)
         section.flex-none
           ul.list-reset.text-xs.flex.text-grey-dark
-            li.mr-3
-              a(href=`/lists/${list.slug}/remove/${post._id}`)
-                | &times
-        
+            if (user && list.owner.equals(user._id))
+              li.mr-3
+                a(href=`/lists/${list.slug}/remove/${post._id}`)
+                  | &times
+          

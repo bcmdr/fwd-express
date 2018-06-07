@@ -87,9 +87,11 @@ exports.getMetaData = async (req, res, next) => {
 }
 
 exports.saveLinkToList = async (req, res, next) => {
-  // Find the Containing List
-  const list = await List.findOne({ slug: req.params.slug })
-  if (!list) { return next() }
+  // Get containing list from earlier middleware
+  const list = req.list
+  if (!list) { 
+    return next() 
+  }
   req.body.list = list._id
 
   // Create the post
@@ -117,16 +119,16 @@ exports.confirmListOwner = async (req, res, next) => {
   next()
 }
 
-exports.getListAndConfirmOwner = async (req, res, next) => {
-  // Find the containing list in the db
-  const list = await List.findOne({ slug: req.params.slug })
-  if (!confirmOwner(list, req.user)) {
-    req.flash('error', `Sorry, you don't have permission to do that.`)
-    return res.redirect('back')
-  }
-  req.list = list
-  next()
-}
+// exports.getListAndConfirmOwner = async (req, res, next) => {
+//   // Find the containing list in the db
+//   const list = await List.findOne({ slug: req.params.slug })
+//   if (!confirmOwner(list, req.user)) {
+//     req.flash('error', `Sorry, you don't have permission to do that.`)
+//     return res.redirect('back')
+//   }
+//   req.list = list
+//   next()
+// }
 
 exports.removeLinkFromList = async (req, res, next) => {
 
