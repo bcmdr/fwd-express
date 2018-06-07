@@ -54,7 +54,7 @@ a {
 }
 
 .hero__action {
-  @apply .bg-purple-dark .flex .justify-center .p-2 .text-center .text-white .w-full
+  @apply .bg-purple-dark .flex .justify-center .p-2 .text-center .text-white .w-full .font-normal
 }
 
 .hero-form {
