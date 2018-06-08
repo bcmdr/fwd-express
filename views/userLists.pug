@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  section.hero
+    header.hero__header
+      h2.hero__title= title
+    a(href=`/lists/new`).hero__action Create List
+
+  section.lists.p-3.flex.flex-wrap
+    each list in lists
+      article.flex.flex-grow.flex-shrink.items-center.rounded.bg-white.shadow.m-1
+        header.flex-grow.text-center
+          h3.font-normal.text-xl
+            a.block.p-4(href=`/${owner.username}/${list.slug}`)= list.title

@@ -4,9 +4,12 @@ block content
   section.hero
     header.hero__header
       h2.hero__title
-        a(href=`/lists/${list.slug}`)= list.title
+        a(href=`/${owner.username}/${list.slug}`)= list.title
+      cite.text-center.block.mt-3
+        a(href=`/${owner.username}`) 
+          | by #{owner.username}
     if (user && list.owner.equals(user._id))
-      a(href=`/lists/${list.slug}/add`).hero__action Add Link
+      a(href=`/${owner.username}/${list.slug}/add`).hero__action Add Link
   section.posts
     each post in list.posts
       article.overflow-hidden.border-grey-light.border-b.flex.p-4.items-center.bg-white
@@ -20,6 +23,6 @@ block content
           ul.list-reset.text-xs.flex.text-grey-dark
             if (user && list.owner.equals(user._id))
               li.mr-3
-                a(href=`/lists/${list.slug}/remove/${post._id}`)
+                a(href=`/${owner.username}/${list.slug}/remove/${post._id}`)
                   | &times
           

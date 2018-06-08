@@ -1,5 +1,5 @@
-mixin linkFormAdd(list)
-  form(action=`/lists/${list.slug}/add` method="POST").hero-form
+mixin linkFormAdd(user, list)
+  form(action=`/${user.username}/${list.slug}/add` method="POST").hero-form
     label(for="targetUrl").hero-form__label.hidden URL or Search Term
     input(type="text" id="url" name="targetUrl").hero-form__input
     input(type="submit" value="Search and Save").hero__action

@@ -1,0 +1,5 @@
+mixin listFormNew()
+  form(action=`/lists/new` method="POST").hero-form
+    label(for="title").hero-form__label Title
+      input(type="text" id="title" name="title").hero-form__input
+    input(type="submit" value="Save").hero-form__submit.hero__action

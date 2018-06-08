@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const helpers = require('../helpers')
 const List = mongoose.model('List')
 const Post = mongoose.model('Post')
+const User = mongoose.model('User')
 const metascraper = require('metascraper')
 const got = require('got')
 
@@ -14,15 +15,28 @@ exports.homePage = async (req, res) => {
   res.render('index', { lists, title: `${helpers.siteDescription}` })
 }
 
-exports.addList = async (req, res, next) => {
-  res.render('addList', { title: `Name Your List` })
+exports.getUserLists = async (req, res) => {
+  const user = await User.findOne({ username: req.params.user })
+  if (!user) {
+    return next() // user not found
+  }
+  const lists = await List.find({ owner: user._id })
+  res.render('userLists', { lists, owner: user, title: `${user.username}'s Lists` })
+}
+
+exports.newList = async (req, res, next) => {
+  res.render('newList', { title: `New List` })
+}
+
+exports.newUserList = async (req, res, next) => {
+  res.render('newUserList', { title: `New List for User...` })
 }
 
 exports.saveList = async (req, res) => {
   req.body.owner = req.user._id
   const list = await (new List(req.body)).save()
   // req.flash('success', `Successfully created ${list.title}`)
-  res.redirect(`/lists/${list.slug}`)
+  res.redirect(`/${req.user.username}/${list.slug}`)
 }
 
 exports.getListBySlug = async (req, res, next) => {
@@ -33,10 +47,31 @@ exports.getListBySlug = async (req, res, next) => {
   res.render('showList', {list, title: list.title})
 }
 
-exports.addLinkToList = async (req, res, next) => {
-  const list = await List.findOne({ slug: req.params.slug })
-  if (!list) return next()
-  res.render('addLink', {list, title: `Add Link to ${list.title}`})
+exports.getUserListBySlug = async (req, res, next) => {
+  // Find the list and fetch nested posts and their nested links
+  const user = await User.findOne({ username: req.params.user })
+  const list = await List.findOne({ owner: user._id, slug: req.params.slug })
+    .populate('posts')
+  if (!list) { return next() }
+  res.render('showList', {list, owner: user, title: list.title})
+}
+
+exports.getList = async (req, res, next) => {
+  req.owner = await User.findOne({ username: req.params.user })
+  req.list = await List.findOne({ owner: req.owner._id, slug: req.params.slug })
+  next()
+}
+
+exports.confirmListOwner = async (req, res, next) => {
+  if (!confirmOwner(req.list, req.user)) {
+    req.flash('error', `Sorry, you don't have permission to do that.`)
+    return res.redirect('back')
+  }
+  next()
+}
+
+exports.addLinkToList = async (req, res) => {
+  res.render('addLink', {list: req.list, owner: req.owner, title: `Add Link to ${req.list.title}`})
 }
 
 exports.searchNonUrls = async (req, res, next) => {
@@ -100,52 +135,16 @@ exports.saveLinkToList = async (req, res, next) => {
   await list.save()
 
   // Redirect On Success
-  res.redirect(`/lists/${req.params.slug}`)
+  res.redirect(`/${req.owner.username}/${req.params.slug}`)
 }
-
-exports.getList = async(req, res, next) => {
-  req.list = await List.findOne({ slug: req.params.slug })
-  next()
-}
-
-exports.confirmListOwner = async (req, res, next) => {
-  if (!confirmOwner(req.list, req.user)) {
-    req.flash('error', `Sorry, you don't have permission to do that.`)
-    return res.redirect('back')
-  }
-  next()
-}
-
-// exports.getListAndConfirmOwner = async (req, res, next) => {
-//   // Find the containing list in the db
-//   const list = await List.findOne({ slug: req.params.slug })
-//   if (!confirmOwner(list, req.user)) {
-//     req.flash('error', `Sorry, you don't have permission to do that.`)
-//     return res.redirect('back')
-//   }
-//   req.list = list
-//   next()
-// }
 
 exports.removeLinkFromList = async (req, res, next) => {
 
   const list = req.list
 
-  // // Find the containing list in the db
-  // const list = await List.findOne({ slug: req.params.slug })
-  // if (!confirmOwner(list, req.user)) {
-  //   req.flash('error', `Sorry, you don't have permission to do that.`)
-  //   return res.redirect('back')
-  // }
-
   // Remove the post reference from list
   list.set( { $pull: { posts: req.params.postId } } )
   const removeFromList = list.save()
-
-  // const removeFromList = List.findOneAndUpdate(
-  //   { slug: req.params.slug },
-  //   { $pull: { posts: req.params.postId } }
-  // ).exec()
 
   // Remove the post document from db
   const removePost = Post.findOneAndRemove(
@@ -154,5 +153,5 @@ exports.removeLinkFromList = async (req, res, next) => {
 
   await Promise.all([removeFromList, removePost])
 
-  res.redirect(`/lists/${req.params.slug}`)
+  res.redirect(`/${req.owner.username}/${req.params.slug}`)
 }

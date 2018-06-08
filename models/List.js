@@ -40,7 +40,7 @@ listSchema.pre('save', async function(next) {
 
   // find other lists that have the same slug
   const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i')
-  const mathchesWithSlug = await this.constructor.find({ slug: slugRegEx });
+  const mathchesWithSlug = await this.constructor.find({ owner: this.owner, slug: slugRegEx });
 
   // If a slug already exists, add an incremented number to the end
   if (mathchesWithSlug.length) {

@@ -1,9 +1,9 @@
 extends layout
 
-include mixins/_linkFormAdd
+include mixins/_listFormNew
 
 block content
   section.hero
     header.hero__header
       h2.hero__title= title
-    +linkFormAdd(owner, list)
+    +listFormNew(user)

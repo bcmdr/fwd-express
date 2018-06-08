@@ -9,42 +9,6 @@ const { catchErrors } = require('../handlers/errorHandlers')
 
 router.get('/', catchErrors(listController.homePage))
 
-router.get('/lists', catchErrors(listController.getLists))
-router.get('/lists/add', authController.isLoggedIn, catchErrors(listController.addList))
-router.post('/lists/add', authController.isLoggedIn, catchErrors(listController.saveList))
-router.get('/lists/:slug', catchErrors(listController.getListBySlug))
-router.get('/lists/:slug/add', catchErrors(listController.addLinkToList))
-router.post('/lists/:slug/add', 
-  catchErrors(listController.getList),
-  catchErrors(listController.confirmListOwner),
-  catchErrors(listController.searchNonUrls),
-  // catchErrors(listController.getMetaData),
-  catchErrors(listController.saveLinkToList)
-)
-router.get('/lists/:slug/remove/:postId', 
-  catchErrors(listController.getList),
-  catchErrors(listController.confirmListOwner),
-  catchErrors(listController.removeLinkFromList)
-)
-
-router.get('/:user', catchErrors(listController.getUserLists))
-router.get('/:user/new', authController.isLoggedIn, catchErrors(listController.newUserList))
-router.post('/:user/new', authController.isLoggedIn, catchErrors(listController.saveUserList))
-router.get('/:user/:slug', catchErrors(listController.getUserListBySlug))
-router.get('/:user/:slug/add', catchErrors(listController.addUserListPost))
-router.post('/:user/:slug/add', 
-  catchErrors(listController.getUserList),
-  catchErrors(listController.confirmUserListOwner),
-  catchErrors(listController.searchNonUrls),
-  // catchErrors(listController.getMetaData),
-  catchErrors(listController.saveUserListPost)
-)
-router.get('/:user/:slug/remove/:postId', 
-  catchErrors(listController.getUserList),
-  catchErrors(listController.confirmUserListOwner),
-  catchErrors(listController.removeUserListPost)
-)
-
 router.get('/login', userController.loginForm)
 router.post('/login', authController.login)
 router.get('/logout', authController.logout)
@@ -62,6 +26,52 @@ router.get('/account/reset/:token', catchErrors(authController.reset))
 router.post('/account/reset/:token', 
   authController.confirmedPasswords,
   catchErrors(authController.updatePassword)
+)
+
+router.get('/lists', catchErrors(listController.getLists))
+router.get('/lists/new', authController.isLoggedIn, listController.newList)
+router.post('/lists/new', authController.isLoggedIn, catchErrors(listController.saveList))
+
+// router.get('/lists/:slug', catchErrors(listController.getListBySlug))
+// router.get('/lists/:slug/add', catchErrors(listController.addLinkToList))
+// router.post('/lists/:slug/add', 
+//   catchErrors(listController.getList),
+//   catchErrors(listController.confirmListOwner),
+//   catchErrors(listController.searchNonUrls),
+//   // catchErrors(listController.getMetaData),
+//   catchErrors(listController.saveLinkToList)
+// )
+// router.get('/lists/:slug/remove/:postId', 
+//   catchErrors(listController.getList),
+//   catchErrors(listController.confirmListOwner),
+//   catchErrors(listController.removeLinkFromList)
+// )
+
+// User Lists
+router.get('/:user', catchErrors(listController.getUserLists))
+
+// Give a list to another user
+// router.get('/:user/new', authController.isLoggedIn, catchErrors(listController.newUserList))
+// router.post('/:user/new', authController.isLoggedIn, catchErrors(listController.saveUserList))
+
+// List Posts
+router.get('/:user/:slug', catchErrors(listController.getUserListBySlug))
+router.get('/:user/:slug/add', 
+  catchErrors(listController.getList),
+  catchErrors(listController.confirmListOwner),
+  catchErrors(listController.addLinkToList)
+)
+router.post('/:user/:slug/add', 
+  catchErrors(listController.getList),
+  catchErrors(listController.confirmListOwner),
+  catchErrors(listController.searchNonUrls),
+  // catchErrors(listController.getMetaData),
+  catchErrors(listController.saveLinkToList)
+)
+router.get('/:user/:slug/remove/:postId', 
+  catchErrors(listController.getList),
+  catchErrors(listController.confirmListOwner),
+  catchErrors(listController.removeLinkFromList)
 )
 
 module.exports = router;
