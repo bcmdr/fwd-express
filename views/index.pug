@@ -3,7 +3,7 @@ extends layout
 block content
   section.hero
     header.hero__header
-      h2.hero__title List and Share Links
+      h2.hero__title My Lists
     a(href="/lists/new").hero__action Create List
 
   section.lists.p-3.flex.flex-wrap
@@ -12,4 +12,4 @@ block content
         article.flex.flex-grow.flex-shrink.items-center.rounded.bg-white.shadow.m-1
           header.flex-grow.text-center
             h3.font-normal.text-xl
-              a.block.p-4(href=`/lists/${list.slug}`)= list.title
+              a.block.p-4(href=`/${user.username}/${list.slug}`)= list.title
