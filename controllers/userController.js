@@ -6,10 +6,6 @@ exports.loginForm = (req, res) => {
   res.render('login', {title: 'Login'})
 }
 
-exports.forgotForm = (req, res) => {
-  res.render('forgot', {title: 'Forgot Password'})
-}
-
 exports.registerForm = (req, res) => {
   res.render('register', {title: 'Register'})
 }
