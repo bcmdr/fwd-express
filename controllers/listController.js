@@ -58,7 +58,7 @@ exports.confirmListOwner = async (req, res, next) => {
 }
 
 exports.addLinkToList = async (req, res) => {
-  res.render('addLink', {list: req.list, owner: req.owner, title: `Add Link to ${req.list.title}`})
+  res.render('addLink', {list: req.list, owner: req.owner, title: `Add to ${req.list.title}`})
 }
 
 exports.searchNonUrls = async (req, res, next) => {

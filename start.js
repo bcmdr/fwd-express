@@ -11,10 +11,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 // Import all models
-require('./models/Link')
-require('./models/Collection')
 require('./models/List')
-require('./models/Item')
 require('./models/Post')
 require('./models/User')
 

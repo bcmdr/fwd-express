@@ -1,7 +1,5 @@
 var express = require('express')
 var router = express.Router()
-const linksSource = require('../links')
-const linkController = require('../controllers/linkController')
 const listController = require('../controllers/listController')
 const userController = require('../controllers/userController')
 const authController = require('../controllers/authController')
