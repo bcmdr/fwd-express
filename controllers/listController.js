@@ -6,10 +6,6 @@ const User = mongoose.model('User')
 const metascraper = require('metascraper')
 const got = require('got')
 
-const confirmOwner = (doc, user) => {
-  return user && doc.owner.equals(user._id)
-}
-
 exports.homePage = async (req, res) => {
   const lists = req.user ? await List.find({ owner: req.user._id }) : {}
   res.render('index', { lists, title: `${helpers.siteDescription}` })
@@ -28,23 +24,10 @@ exports.newList = async (req, res, next) => {
   res.render('newList', { title: `New List` })
 }
 
-exports.newUserList = async (req, res, next) => {
-  res.render('newUserList', { title: `New List for User...` })
-}
-
 exports.saveList = async (req, res) => {
   req.body.owner = req.user._id
   const list = await (new List(req.body)).save()
-  // req.flash('success', `Successfully created ${list.title}`)
   res.redirect(`/${req.user.username}/${list.slug}`)
-}
-
-exports.getListBySlug = async (req, res, next) => {
-  // Find the list and fetch nested posts and their nested links
-  const list = await List.findOne({ slug: req.params.slug })
-    .populate('posts')
-  if (!list) { return next() }
-  res.render('showList', {list, title: list.title})
 }
 
 exports.getUserListBySlug = async (req, res, next) => {
@@ -60,6 +43,10 @@ exports.getList = async (req, res, next) => {
   req.owner = await User.findOne({ username: req.params.user })
   req.list = await List.findOne({ owner: req.owner._id, slug: req.params.slug })
   next()
+}
+
+const confirmOwner = (doc, user) => {
+  return user && doc.owner.equals(user._id)
 }
 
 exports.confirmListOwner = async (req, res, next) => {
