@@ -125,7 +125,7 @@ exports.saveLinkToList = async (req, res, next) => {
   res.redirect(`/${req.owner.username}/${req.params.slug}`)
 }
 
-exports.removeLinkFromList = async (req, res, next) => {
+exports.removeLinkFromList = async (req, res) => {
 
   const list = req.list
 
@@ -141,4 +141,17 @@ exports.removeLinkFromList = async (req, res, next) => {
   await Promise.all([removeFromList, removePost])
 
   res.redirect(`/${req.owner.username}/${req.params.slug}`)
+}
+
+exports.removeList = async (req, res) => {
+  const list = req.list
+  const removeList = List.findOneAndRemove({
+    _id: list._id
+  }).exec()
+  const removePosts = Post.deleteMany({
+    list: list._id
+  }).exec()
+  await Promise.all([removeList, removePosts])
+  req.flash('success', `Removed List: ${list.title}`)
+  res.redirect('/')
 }

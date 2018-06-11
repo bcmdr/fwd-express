@@ -29,6 +29,11 @@ router.post('/account/reset/:token',
 router.get('/lists', catchErrors(listController.getLists))
 router.get('/lists/new', authController.isLoggedIn, listController.newList)
 router.post('/lists/new', authController.isLoggedIn, catchErrors(listController.saveList))
+router.get('/lists/remove/:user/:slug',
+  catchErrors(listController.getList),
+  catchErrors(listController.confirmListOwner),
+  catchErrors(listController.removeList)
+)
 
 // User Lists
 router.get('/:user', catchErrors(listController.getUserLists))

@@ -5,9 +5,14 @@ block content
     header.hero__header
       h2.hero__title
         a(href=`/${owner.username}/${list.slug}`)= list.title
-      cite.text-center.block.mt-3
-        a(href=`/${owner.username}`) 
-          | by #{owner.username}
+      ul.list-reset.flex.justify-center.mt-3
+        li.mr-3
+          a(href=`/${owner.username}`) 
+            | by #{owner.username}
+        if (user && list.owner.equals(user._id))
+          li.mr-3
+            a(href=`/lists/remove/${owner.username}/${list.slug}`)
+              | Remove List
     if (user && list.owner.equals(user._id))
       a(href=`/${owner.username}/${list.slug}/add`).hero__action Add to List
   section.posts
