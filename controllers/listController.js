@@ -27,8 +27,8 @@ exports.newList = async (req, res, next) => {
 const getSearchSource = (title) => {
   if (title.match(/board ?game/gi)) 
     return 'boardgamegeek'
-  if (title.match(/video ?game/gi))
-    return 'gamespot'
+  // if (title.match(/video ?game/gi))
+  //   return 'gamespot'
   if (title.match(/movie/gi))
     return 'imdb'
   if (title.match(/tv +/) || title.match(/televison/))
