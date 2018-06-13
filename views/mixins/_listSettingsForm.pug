@@ -1,0 +1,7 @@
+mixin listSettingsForm()
+  form.form(method="POST").hero-form
+    label(for="title").hero-form__label Title
+      input(type="text" id="title" name="title" value=list.title).hero-form__input
+    label(for="searchSource").hero-form__label Search Source
+      input(type="text" id="searchSource" name="searchSource" value=list.searchSource).hero-form__input
+    input(type="submit" value="Save").hero__action

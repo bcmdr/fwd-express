@@ -80,11 +80,13 @@ exports.addLinkToList = async (req, res) => {
 exports.searchPostDetails = async (req, res, next) => {
   if (!req.body.originalSearch) return next();
 
+  let searchTerm = `${req.body.originalSearch} ${req.list.searchSource || ''}`
+
   // Microsoft Web Search API
   const subscriptionKey = process.env.SEARCH_KEY
   const host = 'api.cognitive.microsoft.com'
   const path = '/bing/v7.0/search'
-  const searchUrl = host + path + '?q=' + encodeURIComponent(req.body.originalSearch)
+  const searchUrl = host + path + '?q=' + encodeURIComponent(searchTerm)
   const { body } = await got(searchUrl, {
     headers : {
       'Ocp-Apim-Subscription-Key' : subscriptionKey,
