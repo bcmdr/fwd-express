@@ -5,10 +5,6 @@ const slug = require('slugs')
 const shortid = require('shortid');
 
 const listSchema = new Schema({
-  // _id: {
-  //   type: Schema.Types.ObjectId,
-  //   default: new mongoose.Types.ObjectId()
-  // },
   shortId: {
     type: String,
     'default': shortid.generate
@@ -19,6 +15,11 @@ const listSchema = new Schema({
     required: 'Please enter a list title.'
   },
   slug: String,
+  searchSource: {
+    type: String,
+    trim: true,
+    lowercase: true
+  },
   description: {
     type: String,
     trim: true

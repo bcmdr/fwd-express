@@ -8,8 +8,11 @@ block content
       ul.list-reset.flex.justify-center.mt-3
         li.mr-3
           a(href=`/${owner.username}`) 
-            | by #{owner.username}
+            | By #{owner.username}
         if (user && list.owner.equals(user._id))
+          li.mr-3
+            a(href=`/${owner.username}/${list.slug}/settings`) 
+              | Settings
           li.mr-3
             a(href=`/lists/remove/${owner.username}/${list.slug}`)
               | Remove List

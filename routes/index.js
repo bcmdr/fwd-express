@@ -28,7 +28,10 @@ router.post('/account/reset/:token',
 
 router.get('/lists', catchErrors(listController.getLists))
 router.get('/lists/new', authController.isLoggedIn, listController.newList)
-router.post('/lists/new', authController.isLoggedIn, catchErrors(listController.saveList))
+router.post('/lists/new', 
+  authController.isLoggedIn, 
+  listController.determineSearchSource, 
+  catchErrors(listController.saveList))
 router.get('/lists/remove/:user/:slug',
   catchErrors(listController.getList),
   catchErrors(listController.confirmListOwner),
@@ -60,6 +63,16 @@ router.get('/:user/:slug/remove/:postId',
   catchErrors(listController.getList),
   catchErrors(listController.confirmListOwner),
   catchErrors(listController.removeLinkFromList)
+)
+router.get('/:user/:slug/settings',
+  catchErrors(listController.getList),
+  catchErrors(listController.confirmListOwner),
+  listController.listSettings
+)
+router.post('/:user/:slug/settings',
+  catchErrors(listController.getList),
+  catchErrors(listController.confirmListOwner),
+  catchErrors(listController.saveListSettings)
 )
 
 module.exports = router;

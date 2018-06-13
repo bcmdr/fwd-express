@@ -24,6 +24,22 @@ exports.newList = async (req, res, next) => {
   res.render('newList', { title: `New List` })
 }
 
+const getSearchSource = (title) => {
+  if (title.match(/board ?game/gi)) 
+    return 'boardgamegeek'
+  if (title.match(/video ?game/gi))
+    return 'gamespot'
+  if (title.match(/movie/gi))
+    return 'imdb'
+  if (title.match(/tv +/) || title.match(/televison/))
+    return 'imdb'
+}
+
+exports.determineSearchSource = (req, res, next) => {
+  req.body.searchSource = getSearchSource(req.body.title)
+  next()
+}
+
 exports.saveList = async (req, res) => {
   req.body.owner = req.user._id
   const list = await (new List(req.body)).save()
@@ -143,4 +159,24 @@ exports.removeList = async (req, res) => {
   await Promise.all([removeList, removePosts])
   req.flash('success', `Removed List: ${list.title}`)
   res.redirect('/')
+}
+
+exports.listSettings = async (req, res) => {
+  res.render('listSettings', {list: req.list, owner: req.owner, title: `Settings for ${req.list.title}`})
+}
+
+exports.saveListSettings = async (req, res) => {
+    
+
+  const list = await List.findById(req.list._id)
+
+  list.title = req.body.title
+  list.searchSource = req.body.searchSource
+
+  const savedList = await list.save( 
+    {validateBeforeSave: true}
+  )
+  
+  req.flash('success', 'List settings saved.')
+  res.redirect(`/${req.owner.username}/${savedList.slug}`)
 }
