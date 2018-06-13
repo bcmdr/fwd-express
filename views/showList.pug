@@ -18,13 +18,13 @@ block content
   section.posts
     each post in list.posts
       article.overflow-hidden.border-grey-light.border-b.flex.p-4.items-center.bg-white
-        //- a(class='block w-12 h-12 flex-none bg-cover rounded-full' style=`background-image: url(${post.meta.image || post.meta.logo})` href=`${post.meta.url}` title=`${post.meta.title}`)
-        section.flex-grow.pr-4
+        a.block.w-12.h-12.flex-none.bg-cover.rounded-full.mr-4(style=`background-image: url(${post.siteMeta.image || post.siteMeta.logo})` href=`${post.siteMeta.url}` title=`${post.siteMeta.title}`)
+        section.flex-grow
           h3.pb-1.font-semibold.tracking-tight
-            a(href=`${post.meta.url}`)= post.meta.title
+            a(href=`${post.siteMeta.url}`)= post.siteMeta.title
           cite.text-sm
-            a(href=`${post.meta.url}`)= h.formatUrl(post.meta.url)
-        section.flex-none
+            a(href=`${post.siteMeta.url}`)= h.formatUrl(post.siteMeta.url)
+        section.flex-none.ml-4
           ul.list-reset.text-xs.flex.text-grey-dark
             if (user && list.owner.equals(user._id))
               li.mr-3

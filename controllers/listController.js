@@ -61,19 +61,14 @@ exports.addLinkToList = async (req, res) => {
   res.render('addLink', {list: req.list, owner: req.owner, title: `Add to ${req.list.title}`})
 }
 
-exports.searchNonUrls = async (req, res, next) => {
-  if (!req.body.targetUrl) return next();
-
-  // if target url resembles a query instead, get url of top search engine result
-  if ( req.body.targetUrl.includes('.') ) {
-    return next()
-  }
+exports.searchPostDetails = async (req, res, next) => {
+  if (!req.body.originalSearch) return next();
 
   // Microsoft Web Search API
   const subscriptionKey = process.env.SEARCH_KEY
   const host = 'api.cognitive.microsoft.com'
   const path = '/bing/v7.0/search'
-  const searchUrl = host + path + '?q=' + encodeURIComponent(req.body.targetUrl)
+  const searchUrl = host + path + '?q=' + encodeURIComponent(req.body.originalSearch)
   const { body } = await got(searchUrl, {
     headers : {
       'Ocp-Apim-Subscription-Key' : subscriptionKey,
@@ -86,22 +81,16 @@ exports.searchNonUrls = async (req, res, next) => {
   // Parse results
   const results = JSON.parse(body)
   const topResult = results.webPages.value[0]
-  const { name: title, url } = topResult
-  req.body.targetUrl = url
-  req.body.meta = { title, url }
+  req.body.searchMeta = topResult
+  req.body.targetUrl = topResult.url
   next()
 }
 
 exports.getMetaData = async (req, res, next) => {
-
-  // skip metascraper for now
-  return next()
-
   if (!req.body.targetUrl) return next();
-
   // scrape and update metadata of target url
   const { body: html, url } = await got(req.body.targetUrl, { timeout: 5000 })
-  req.body.meta = await metascraper({ html, url })
+  req.body.siteMeta = await metascraper({ html, url })
   next()
 }
 

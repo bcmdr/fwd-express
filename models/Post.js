@@ -12,22 +12,27 @@ const postSchema = new Schema({
     type: String, 
     trim: true, 
   },
-  description: {
-    type: String,
-    trim: true
-  },
   createdOn: {
     type: Date,
     default: Date.now
+  },
+  originalSearch: {
+    type: String, 
+    trim: true, 
+    required: 'Please enter a search term or website.'
   },
   targetUrl: {
     type: String, 
     trim: true, 
     required: 'Please enter a search term or website.'
   },
-  meta: {
+  searchMeta: {
     type: Schema.Types.Mixed,
-    required: 'Please provide meta data'
+    required: 'Please provide search meta data'
+  },
+  siteMeta: {
+    type: Schema.Types.Mixed,
+    required: 'Please provide site meta data'
   },
   list: { 
     type: Schema.Types.ObjectId, 
@@ -37,7 +42,7 @@ const postSchema = new Schema({
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: 'Please provide the owning user.'
+    required: 'Please provide the owner.'
   }
 })
 
