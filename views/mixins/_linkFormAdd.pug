@@ -1,5 +1,5 @@
 mixin linkFormAdd(user, list)
   form(action=`/${user.username}/${list.slug}/add` method="POST" autocomplete="off").hero-form
-    label(for="originalSearch").hero-form__label URL or Search Terms
-      input(type="text" id="originalSearch" name="originalSearch" autofocus).hero-form__input
-    input(type="submit" value="Search and Save").hero__action
+    label(for="targetUrl").hero-form__label Link URL
+      input(type="text" id="targetUrl" name="targetUrl" autofocus).hero-form__input
+    input(type="submit" value="Save").hero__action

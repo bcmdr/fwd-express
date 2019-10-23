@@ -30,7 +30,6 @@ router.get('/lists', catchErrors(listController.getLists))
 router.get('/lists/new', authController.isLoggedIn, listController.newList)
 router.post('/lists/new', 
   authController.isLoggedIn, 
-  listController.determineSearchSource, 
   catchErrors(listController.saveList))
 router.get('/lists/remove/:user/:slug',
   catchErrors(listController.getList),
@@ -55,8 +54,8 @@ router.get('/:user/:slug/add',
 router.post('/:user/:slug/add', 
   catchErrors(listController.getList),
   catchErrors(listController.confirmListOwner),
-  catchErrors(listController.searchPostDetails),
-  catchErrors(listController.getMetaData),
+  // catchErrors(listController.searchPostDetails),
+  // catchErrors(listController.getMetaData),
   catchErrors(listController.saveLinkToList)
 )
 router.get('/:user/:slug/remove/:postId', 

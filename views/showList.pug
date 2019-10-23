@@ -13,24 +13,22 @@ block content
           li.mr-3
             a(href=`/${owner.username}/${list.slug}/settings`) 
               | Settings
-          li.mr-3
-            a(href=`/lists/remove/${owner.username}/${list.slug}`)
-              | Remove List
     if (user && list.owner.equals(user._id))
       a(href=`/${owner.username}/${list.slug}/add`).hero__action Add to List
   section.posts
     each post in list.posts
-      article.overflow-hidden.border-grey-light.border-b.flex.p-4.items-center.bg-white
-        a.block.w-12.h-12.flex-none.bg-cover.rounded-full.mr-4(style=`background-image: url(${post.siteMeta.image || post.siteMeta.logo})` href=`${post.siteMeta.url}` title=`${post.siteMeta.title}`)
-        section.flex-grow
-          h3.pb-1.font-semibold.tracking-tight
-            a(href=`${post.siteMeta.url}`)= post.siteMeta.title
-          cite.text-sm
-            a(href=`${post.siteMeta.url}`)= h.formatUrl(post.siteMeta.url)
-        section.flex-none.ml-4
-          ul.list-reset.text-xs.flex.text-grey-dark
-            if (user && list.owner.equals(user._id))
-              li.mr-3
-                a(href=`/${owner.username}/${list.slug}/remove/${post._id}`)
-                  | &times
+      if post.siteMeta
+        article.overflow-hidden.border-grey-light.border-b.flex.p-4.items-center.bg-white
+          a.block.w-12.h-12.flex-none.bg-cover.rounded-full.mr-4(style=`background-image: url(${post.siteMeta.image || post.siteMeta.logo})` href=`${post.siteMeta.url}` title=`${post.siteMeta.title}`)
+          section.flex-grow
+            h3.pb-1.font-semibold.tracking-tight
+              a(href=`${post.siteMeta.url}`)= post.siteMeta.title
+            cite.text-sm
+              a(href=`${post.siteMeta.url}`)= h.formatUrl(post.siteMeta.url)
+          section.flex-none.ml-4
+            ul.list-reset.text-xs.flex.text-grey-dark
+              if (user && list.owner.equals(user._id))
+                li.mr-3
+                  a(href=`/${owner.username}/${list.slug}/remove/${post._id}`)
+                    | &times
           

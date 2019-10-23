@@ -24,21 +24,21 @@ exports.newList = async (req, res, next) => {
   res.render('newList', { title: `New List` })
 }
 
-const getSearchSource = (title) => {
-  if (title.match(/board ?game/gi)) 
-    return 'boardgamegeek'
-  // if (title.match(/video ?game/gi))
-  //   return 'gamespot'
-  if (title.match(/movie/gi))
-    return 'imdb'
-  if (title.match(/tv +/) || title.match(/televison/))
-    return 'imdb'
-}
+// const getSearchSource = (title) => {
+//   if (title.match(/board ?game/gi)) 
+//     return 'boardgamegeek'
+//   // if (title.match(/video ?game/gi))
+//   //   return 'gamespot'
+//   if (title.match(/movie/gi))
+//     return 'imdb'
+//   if (title.match(/tv +/) || title.match(/televison/))
+//     return 'imdb'
+// }
 
-exports.determineSearchSource = (req, res, next) => {
-  req.body.searchSource = getSearchSource(req.body.title)
-  next()
-}
+// exports.determineSearchSource = (req, res, next) => {
+//   req.body.searchSource = getSearchSource(req.body.title)
+//   next()
+// }
 
 exports.saveList = async (req, res) => {
   req.body.owner = req.user._id
@@ -66,7 +66,7 @@ const confirmOwner = (doc, user) => {
 }
 
 exports.confirmListOwner = async (req, res, next) => {
-  if (!confirmOwner(req.list, req.user)) {
+  if (!req.list || !confirmOwner(req.list, req.user)) {
     req.flash('error', `Sorry, you don't have permission to do that.`)
     return res.redirect('back')
   }
@@ -82,16 +82,16 @@ exports.searchPostDetails = async (req, res, next) => {
 
   let searchTerm = `${req.body.originalSearch} ${req.list.searchSource || ''}`
 
-  // Microsoft Web Search API
-  const subscriptionKey = process.env.SEARCH_KEY
-  const host = 'api.cognitive.microsoft.com'
-  const path = '/bing/v7.0/search'
-  const searchUrl = host + path + '?q=' + encodeURIComponent(searchTerm)
-  const { body } = await got(searchUrl, {
-    headers : {
-      'Ocp-Apim-Subscription-Key' : subscriptionKey,
-    }
-  })
+  // // Microsoft Web Search API
+  // const subscriptionKey = process.env.SEARCH_KEY
+  // const host = 'api.cognitive.microsoft.com'
+  // const path = '/bing/v7.0/search'
+  // const searchUrl = host + path + '?q=' + encodeURIComponent(searchTerm)
+  // const { body } = await got(searchUrl, {
+  //   headers : {
+  //     'Ocp-Apim-Subscription-Key' : subscriptionKey,
+  //   }
+  // })
 
   // No results found
   if (!body) return next()
@@ -107,8 +107,9 @@ exports.searchPostDetails = async (req, res, next) => {
 exports.getMetaData = async (req, res, next) => {
   if (!req.body.targetUrl) return next();
   // scrape and update metadata of target url
-  const { body: html, url } = await got(req.body.targetUrl, { timeout: 5000 })
-  req.body.siteMeta = await metascraper({ html, url })
+  const { body: html, url } = await got(req.body.targetUrl, { timeout: 5000 });
+  const meta = metascraper({ html, url });
+  req.body.siteMeta = meta;
   next()
 }
 
@@ -120,9 +121,16 @@ exports.saveLinkToList = async (req, res, next) => {
   }
   req.body.list = list._id
 
+  if (!req.body.targetUrl) return next();
+  // scrape and update metadata of target url
+  const { body: html, url } = await got(req.body.targetUrl, { timeout: 5000 });
+  const meta = await metascraper({ url, html });
+  req.body.siteMeta = meta;
+
   // Create the post
   req.body.owner = req.user._id
   const post = await (new Post(req.body)).save()
+  console.log(post)
 
   // Add post to the target list
   list.posts.push(post._id)

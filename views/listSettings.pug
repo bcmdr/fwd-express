@@ -7,3 +7,16 @@ block content
     header.hero__header
       h2.hero__title= title
     +listSettingsForm()
+  section.flex.justify-center.mt-6
+    a(href=`/lists/remove/${owner.username}/${list.slug}`)#remove-list
+      | Remove List
+
+  script.
+    const listTitle = '#{list.title}';
+    const handleRemoveClick = (event) => {
+      if (!confirm(`This will delete ${listTitle}. Are you sure?`)) {
+        event.preventDefault();
+        return
+      }
+    };
+    document.getElementById('remove-list').addEventListener('click', handleRemoveClick);

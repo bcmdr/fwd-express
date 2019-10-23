@@ -60,5 +60,6 @@ typings/
 # next.js build output
 .next
 
+# Dotenv files
 variables.env
 variables.env.now

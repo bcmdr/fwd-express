@@ -16,23 +16,14 @@ const postSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  originalSearch: {
-    type: String, 
-    trim: true, 
-    required: 'Please enter a search term or website.'
-  },
   targetUrl: {
     type: String, 
     trim: true, 
-    required: 'Please enter a search term or website.'
-  },
-  searchMeta: {
-    type: Schema.Types.Mixed,
-    required: 'Please provide search meta data'
+    required: 'Please enter a valid website link.'
   },
   siteMeta: {
     type: Schema.Types.Mixed,
-    required: 'Please provide site meta data'
+    required: 'Please provide site meta data.'
   },
   list: { 
     type: Schema.Types.ObjectId, 
