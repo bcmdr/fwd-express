@@ -55,7 +55,7 @@ router.post('/:user/:slug/add',
   catchErrors(listController.getList),
   catchErrors(listController.confirmListOwner),
   // catchErrors(listController.searchPostDetails),
-  // catchErrors(listController.getMetaData),
+  catchErrors(listController.getMetaData),
   catchErrors(listController.saveLinkToList)
 )
 router.get('/:user/:slug/remove/:postId', 

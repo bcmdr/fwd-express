@@ -3,7 +3,13 @@ const helpers = require('../helpers')
 const List = mongoose.model('List')
 const Post = mongoose.model('Post')
 const User = mongoose.model('User')
-const metascraper = require('metascraper')
+const metascraper = require('metascraper')([
+  require('metascraper-description')(),
+  require('metascraper-image')(),
+  require('metascraper-logo')(),
+  require('metascraper-title')(),
+  require('metascraper-url')()
+])
 const got = require('got')
 
 exports.homePage = async (req, res) => {
@@ -61,6 +67,11 @@ exports.getList = async (req, res, next) => {
   next()
 }
 
+exports.addLinkToList = async (req, res) => {
+  res.render('addLink', {list: req.list, owner: req.owner, title: `Add to ${req.list.title}`})
+}
+
+
 const confirmOwner = (doc, user) => {
   return user && doc.owner.equals(user._id)
 }
@@ -73,80 +84,42 @@ exports.confirmListOwner = async (req, res, next) => {
   next()
 }
 
-exports.addLinkToList = async (req, res) => {
-  res.render('addLink', {list: req.list, owner: req.owner, title: `Add to ${req.list.title}`})
-}
-
-exports.searchPostDetails = async (req, res, next) => {
-  if (!req.body.originalSearch) return next();
-
-  let searchTerm = `${req.body.originalSearch} ${req.list.searchSource || ''}`
-
-  // // Microsoft Web Search API
-  // const subscriptionKey = process.env.SEARCH_KEY
-  // const host = 'api.cognitive.microsoft.com'
-  // const path = '/bing/v7.0/search'
-  // const searchUrl = host + path + '?q=' + encodeURIComponent(searchTerm)
-  // const { body } = await got(searchUrl, {
-  //   headers : {
-  //     'Ocp-Apim-Subscription-Key' : subscriptionKey,
-  //   }
-  // })
-
-  // No results found
-  if (!body) return next()
-
-  // Parse results
-  const results = JSON.parse(body)
-  const topResult = results.webPages.value[0]
-  req.body.searchMeta = topResult
-  req.body.targetUrl = topResult.url
-  next()
-}
-
 exports.getMetaData = async (req, res, next) => {
   if (!req.body.targetUrl) return next();
   // scrape and update metadata of target url
   const { body: html, url } = await got(req.body.targetUrl, { timeout: 5000 });
-  const meta = metascraper({ html, url });
+  const meta = await metascraper({ html, url });
   req.body.siteMeta = meta;
   next()
 }
 
 exports.saveLinkToList = async (req, res, next) => {
   // Get containing list from earlier middleware
-  const list = req.list
+  const list = req.list;
   if (!list) { 
-    return next() 
+    return next();
   }
-  req.body.list = list._id
-
-  if (!req.body.targetUrl) return next();
-  // scrape and update metadata of target url
-  const { body: html, url } = await got(req.body.targetUrl, { timeout: 5000 });
-  const meta = await metascraper({ url, html });
-  req.body.siteMeta = meta;
+  req.body.list = list._id;
 
   // Create the post
-  req.body.owner = req.user._id
-  const post = await (new Post(req.body)).save()
-  console.log(post)
+  req.body.owner = req.user._id;
+  const post = await (new Post(req.body)).save();
 
   // Add post to the target list
-  list.posts.push(post._id)
-  await list.save()
+  list.posts.push(post._id);
+  await list.save();
 
   // Redirect On Success
-  res.redirect(`/${req.owner.username}/${req.params.slug}`)
+  res.redirect(`/${req.owner.username}/${req.params.slug}`);
 }
 
 exports.removeLinkFromList = async (req, res) => {
 
-  const list = req.list
+  const list = req.list;
 
   // Remove the post reference from list
-  list.set( { $pull: { posts: req.params.postId } } )
-  const removeFromList = list.save()
+  list.set( { $pull: { posts: req.params.postId } } );
+  const removeFromList = list.save();
 
   // Remove the post document from db
   const removePost = Post.findOneAndRemove(
