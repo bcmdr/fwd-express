@@ -11,14 +11,10 @@
     "name": "fwd"
   },
   "scripts": {
-    "start": "node ./start.js",
     "build": "webpack",
     "watch": "nodemon ./start.js --ignore public/",
     "dev": "concurrently \"npm run watch\" \"npm run assets\" --names \"💻,📦\" --prefix name",
-    "assets": "webpack -w --display-max-modules 0",
-    "deploy": "now --public",
-    "alias": "now alias",
-    "clean": "now rm --safe --yes fwd"
+    "assets": "webpack -w --display-max-modules 0"
   },
   "browserslist": "last 3 versions",
   "dependencies": {
