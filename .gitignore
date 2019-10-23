@@ -63,3 +63,7 @@ typings/
 # Dotenv files
 variables.env
 variables.env.now
+
+now.json
+
+public/dist/
