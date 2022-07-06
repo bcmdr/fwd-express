@@ -50,7 +50,7 @@
     "metascraper-logo": "^5.7.6",
     "metascraper-title": "^5.7.6",
     "metascraper-url": "^5.7.6",
-    "moment": "^2.19.3",
+    "moment": "^2.29.4",
     "mongoose": "^5.7.6",
     "mongoose-mongodb-errors": "0.0.2",
     "morgan": "^1.9.1",
